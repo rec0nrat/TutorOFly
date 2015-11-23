@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
-    public static final String SERVER_ADDRESS = "http://tonikamitv.hostei.com/";
+    public static final String SERVER_ADDRESS = "http://52.34.0.76/";
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
@@ -34,8 +34,7 @@ public class ServerRequests {
         progressDialog.setMessage("Please wait...");
     }
 
-    public void storeUserDataInBackground(User user,
-                                          GetUserCallback userCallBack) {
+    public void storeUserDataInBackground(User user, GetUserCallback userCallBack) {
         progressDialog.show();
         new StoreUserDataAsyncTask(user, userCallBack).execute();
     }
@@ -45,10 +44,50 @@ public class ServerRequests {
         new fetchUserDataAsyncTask(user, userCallBack).execute();
     }
 
+    public void storeUserMessageInBackground(User user, String message, GetUserCallback userCallBack){
+        progressDialog.show();
+        new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
+    }
+
     /**
      * parameter sent to task upon execution progress published during
      * background computation result of the background computation
      */
+
+    public class StoreUserMessageAsyncTask extends AsyncTask<Void, Void, Void>{
+        User user;
+        GetUserCallback userCallback;
+        String message;
+
+        public StoreUserMessageAsyncTask(User user, String message, GetUserCallback userCallback){
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+
+            dataToSend.add(new BasicNameValuePair("UserName", user.username));
+            dataToSend.add(new BasicNameValuePair("MessageText", message));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "MessageSubmit.php");
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                client.execute(post);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
 
     public class StoreUserDataAsyncTask extends AsyncTask<Void, Void, Void> {
         User user;
@@ -67,11 +106,13 @@ public class ServerRequests {
             dataToSend.add(new BasicNameValuePair("password", user.password));
             dataToSend.add(new BasicNameValuePair("age", user.age + ""));
 
-            HttpParams httpRequestParams = getHttpRequestParams();
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            //HttpParams httpRequestParams = getHttpRequestParams();
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS
-                    + "Register.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "Register.php");
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -85,10 +126,8 @@ public class ServerRequests {
 
         private HttpParams getHttpRequestParams() {
             HttpParams httpRequestParams = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpRequestParams,
-                    CONNECTION_TIMEOUT);
-            HttpConnectionParams.setSoTimeout(httpRequestParams,
-                    CONNECTION_TIMEOUT);
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
             return httpRequestParams;
         }
 
@@ -115,16 +154,16 @@ public class ServerRequests {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
+            Log.i("TYLERS INFO: " , user.username + user.password);
 
             HttpParams httpRequestParams = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpRequestParams,
-                    CONNECTION_TIMEOUT);
-            HttpConnectionParams.setSoTimeout(httpRequestParams,
-                    CONNECTION_TIMEOUT);
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+
+
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS
-                    + "FetchUserData.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchUserData.php");
 
             User returnedUser = null;
 
@@ -141,8 +180,7 @@ public class ServerRequests {
                     String name = jObject.getString("name");
                     int age = jObject.getInt("age");
 
-                    returnedUser = new User(name, age, user.username,
-                            user.password);
+                    returnedUser = new User(name, age, user.username, user.password);
                 }
 
             } catch (Exception e) {
