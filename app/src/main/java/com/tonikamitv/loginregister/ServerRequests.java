@@ -46,22 +46,24 @@ public class ServerRequests {
 
     public void storeUserMessageInBackground(User user, String message, GetUserCallback userCallBack){
         progressDialog.show();
+        Log.w("Message: ", message);
         new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
     }
 
-    /**
+    /**tweiss
      * parameter sent to task upon execution progress published during
      * background computation result of the background computation
      */
 
     public class StoreUserMessageAsyncTask extends AsyncTask<Void, Void, Void>{
         User user;
-        GetUserCallback userCallback;
+        GetUserCallback userCallBack;
         String message;
 
-        public StoreUserMessageAsyncTask(User user, String message, GetUserCallback userCallback){
-
-
+        public StoreUserMessageAsyncTask(User user, String message, GetUserCallback userCallBack){
+            this.user = user;
+            this.userCallBack = userCallBack;
+            this.message = message;
         }
 
         @Override
@@ -70,10 +72,15 @@ public class ServerRequests {
 
             dataToSend.add(new BasicNameValuePair("UserName", user.username));
             dataToSend.add(new BasicNameValuePair("MessageText", message));
+            dataToSend.add(new BasicNameValuePair("UserID", user.age + ""));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
             HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+
+            Log.i("Username: ", user.username);
+            Log.i("Message: ", message);
+            Log.i("StudentID: ", user.age +"");
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "MessageSubmit.php");
@@ -86,6 +93,20 @@ public class ServerRequests {
             }
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            userCallBack.done(null);
+        }
+
+        private HttpParams getHttpRequestParams() {
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            return httpRequestParams;
         }
     }
 

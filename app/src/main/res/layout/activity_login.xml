@@ -45,4 +45,15 @@
         android:text="Register Here"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tutor On The Fly\n(Placeholder Art)"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#00FF00"
+        android:textSize="40sp"/>
+
 </LinearLayout>

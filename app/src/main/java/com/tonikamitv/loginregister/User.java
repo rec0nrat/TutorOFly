@@ -1,6 +1,8 @@
 package com.tonikamitv.loginregister;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     String name, username, password;
     int age;

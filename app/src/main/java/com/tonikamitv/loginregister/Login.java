@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 //import android.app.ActionBarActivity;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.io.Serializable;
 
 
 public class Login extends Activity implements View.OnClickListener {
@@ -97,7 +101,12 @@ public class Login extends Activity implements View.OnClickListener {
     private void logUserIn(User returnedUser) {
         userLocalStore.storeUserData(returnedUser);
         userLocalStore.setUserLoggedIn(true);
-        startActivity(new Intent(this, MainActivity.class));
+        Bundle extras = new Bundle();
+        extras.putSerializable("user", userLocalStore.getLoggedInUser());
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtras(extras);
+       // Log.i("Username: ", userLocalStore.getLoggedInUser().username.toString());
+        startActivity(intent);
     }
 
 

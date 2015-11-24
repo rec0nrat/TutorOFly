@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 //import android.support.v7.app.ActionBarActivity;
 
 
@@ -24,6 +26,7 @@ public class MainActivity extends Activity {
     //implements View.OnClickListener{
 
     UserLocalStore userLocalStore;
+    User user;
     EditText etName, etStudentID, etUsername;
     Button bLogout;
 
@@ -77,7 +80,12 @@ public class MainActivity extends Activity {
 
         bLogout.setOnClickListener(this);
 */
-        userLocalStore = new UserLocalStore(this);
+        Bundle bundle = this.getIntent().getExtras();
+        user = (User)bundle.getSerializable("user");
+
+
+
+        //userLocalStore = new UserLocalStore(this);
 
     }
 
@@ -101,6 +109,10 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public User getCurrentUser(){
+        return user;
     }
 
 /*

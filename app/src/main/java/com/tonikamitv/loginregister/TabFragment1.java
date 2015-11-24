@@ -1,5 +1,6 @@
 package com.tonikamitv.loginregister;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,9 +20,11 @@ import android.widget.Toast;
  * Created by tylweiss on 11/22/2015.
  */
 public class TabFragment1 extends Fragment implements View.OnClickListener{
-
+    User user;
     EditText messageText;
     Button button;
+    View container;
+    //UserLocalStore userLocalStore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,35 +41,37 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         button = (Button) view.findViewById(R.id.btnPostMessage);
         messageText = (EditText) view.findViewById(R.id.tutorMessageInput);
+        container = view.findViewById(R.id.fragmentContainer);
         button.setOnClickListener(this);
+        user = ((MainActivity)getActivity()).getCurrentUser();
 
     }
 
     public void postMessageClicked(){
 
-        /*
-        ServerRequests serverRequest = new ServerRequests();
 
-        serverRequest.fetchUserDataAsyncTask(user, new GetUserCallback() {
-            @Override
-            public void done(User returnedUser) {
-                if (returnedUser == null) {
-                    showErrorMessage();
-                } else {
-                    logUserIn(returnedUser);
-                }
-            }
-        });
-        */
+        ServerRequests serverRequest = new ServerRequests(getActivity());
 
         String message = messageText.getText().toString();
 
-        Log.w("Message: ", message);
+        serverRequest.storeUserMessageInBackground(user, message, new GetUserCallback() {
+            @Override
+            public void done(User returnedUser) {
+                if (returnedUser == null) {
+                   // showErrorMessage();
+                } else {
+                    //logUserIn(returnedUser);
+                }
+
+            }
+        });
+
     }
 
     @Override
     public void onClick(View view) {
         postMessageClicked();
     }
+
 
 }
