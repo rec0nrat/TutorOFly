@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="I:\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="I:\TutorOFly\app\build\intermediates\pre-dexed\debug\classes-aa3b67ba95336966c338a35c9200122737108621.jar" />
+    </item>
+    <item
+        jar="C:\Users\tylweiss\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="I:\TutorOFly\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-47c572de48cc8b8c67e2937c20b6c83f23372fbb.jar" />
+    </item>
+    <item
+        jar="I:\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="I:\TutorOFly\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-fe83112c3bd3414a928430d9d2dbf1a19d8d4619.jar" />
+    </item>
+    <item
+        jar="I:\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="I:\TutorOFly\app\build\intermediates\pre-dexed\debug\classes-81fe75ec4a7cf3cbbf34604b6c138b971f9ae253.jar" />
+    </item>
+
+</items>
