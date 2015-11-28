@@ -16,7 +16,8 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/editText"
-        android:layout_weight="0.52" />
+        android:layout_weight="0.52"
+        android:background="@drawable/back"/>
 
     <Button
         android:layout_width="291dp"
