@@ -62,7 +62,6 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
     public void postMessageClicked(){
 
-
         ServerRequests serverRequest = new ServerRequests(getActivity());
 
         String message = messageText.getText().toString();
