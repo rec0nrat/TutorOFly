@@ -50,7 +50,7 @@ public class ServerRequests {
         new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
     }
 
-    /**tweiss
+    /**tweissMess
      * parameter sent to task upon execution progress published during
      * background computation result of the background computation
      */
@@ -83,7 +83,7 @@ public class ServerRequests {
             Log.i("StudentID: ", user.age +"");
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "MessageSubmit.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "SubmitMessage.php");
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
