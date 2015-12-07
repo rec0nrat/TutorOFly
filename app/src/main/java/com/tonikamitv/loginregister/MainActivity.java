@@ -17,12 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.Serializable;
-
 //import android.support.v7.app.ActionBarActivity;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
     //implements View.OnClickListener{
 
     UserLocalStore userLocalStore;
@@ -35,6 +33,8 @@ public class MainActivity extends Activity {
     Fragment fragment1 = new TabFragment1();
     Fragment fragment2 = new TabFragment2();
     Fragment fragment3 = new TabFragment3();
+
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
                 return v;
             }
         });
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -180,4 +182,6 @@ public class MainActivity extends Activity {
 
         Log.w("Message: ", "I'm a banana!!!");
     }
+
+
 }
