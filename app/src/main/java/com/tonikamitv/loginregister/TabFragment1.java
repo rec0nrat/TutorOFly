@@ -1,10 +1,13 @@
 package com.tonikamitv.loginregister;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,6 +64,9 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         button.setOnClickListener(this);
         syncButton.setOnClickListener(this);
         user = ((MainActivity)getActivity()).getCurrentUser();
+
+        //closeKeyboard(getActivity(), messageText.getWindowToken());
+        //view.findViewById(R.id.btnSyncMessage).requestFocus();
 
     }
 
@@ -125,7 +131,11 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         }
     }
 
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
 
+    }
 
 
 }
