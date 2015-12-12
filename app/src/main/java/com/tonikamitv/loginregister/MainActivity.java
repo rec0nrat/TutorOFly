@@ -1,11 +1,11 @@
 package com.tonikamitv.loginregister;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,11 +18,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 //import android.support.v7.app.ActionBarActivity;
 
 
-public class MainActivity extends Activity {
+public abstract class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     //implements View.OnClickListener{
 
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
     User user;
     EditText etName, etStudentID, etUsername;
     Button bLogout;
+    Message message;
 
     ActionBar.Tab tab1, tab2, tab3;
 
@@ -63,6 +65,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.userMap);
+        mapFragment.getMapAsync(this);
+
+
         ///Stuff for action bar tabs navigation
         ActionBar actionBar = getActionBar();
 
@@ -70,7 +77,7 @@ public class MainActivity extends Activity {
 
         tab1 = actionBar.newTab().setText("Find Help");
         tab2 = actionBar.newTab().setText("Anonymous");
-        tab3 = actionBar.newTab().setText("Groups");
+        tab3 = actionBar.newTab().setText("User Map");
 
         tab1.setTabListener(new TabListener(fragment1));
         tab2.setTabListener(new TabListener(fragment2));
@@ -98,13 +105,13 @@ public class MainActivity extends Activity {
     }
 
 
-    private boolean initMap() {
+    /*private boolean initMap() {
         if (mMap == null){
             MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.userMap);
             mMap = mapFragment.getMap();
         }
         return (mMap != null);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
