@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
+    android:id="@+id/tab1Frag"
     android:windowSoftInputMode="adjustPan">
 
     <TextView
@@ -23,12 +24,17 @@
         android:background="@drawable/back"/>
 
     <Button
-        android:layout_width="305dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Post Message"
         android:id="@+id/btnPostMessage"
-        android:layout_gravity="center_horizontal"
         android:clickable="false" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sync Messages"
+        android:id="@+id/btnSyncMessage" />
 
     <ListView
         android:layout_width="match_parent"

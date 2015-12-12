@@ -34,6 +34,7 @@ public class ServerRequests {
         progressDialog.setMessage("Please wait...");
     }
 
+    //User Login/Register methods
     public void storeUserDataInBackground(User user, GetUserCallback userCallBack) {
         progressDialog.show();
         new StoreUserDataAsyncTask(user, userCallBack).execute();
@@ -44,10 +45,15 @@ public class ServerRequests {
         new fetchUserDataAsyncTask(user, userCallBack).execute();
     }
 
+    //Message Post/Sync methods
     public void storeUserMessageInBackground(User user, String message, GetUserCallback userCallBack){
         progressDialog.show();
-        Log.w("Message: ", message);
         new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
+    }
+
+    public void fetchMessagesAsyncTask(User user, GetUserCallback userCallBack) {
+        progressDialog.show();
+        new FetchMessagesInBackground(user, userCallBack).execute();
     }
 
     /**tweissMess
@@ -175,7 +181,7 @@ public class ServerRequests {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
-            Log.i("TYLERS INFO: " , user.username + user.password);
+            //Log.i("TYLERS INFO: " , user.username + user.password);
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -197,6 +203,74 @@ public class ServerRequests {
                 JSONObject jObject = new JSONObject(result);
 
                 if (jObject.length() != 0){
+
+                    String name = jObject.getString("name");
+                    int age = jObject.getInt("age");
+
+                    returnedUser = new User(name, age, user.username, user.password);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return returnedUser;
+        }
+        //**********************************************
+
+        @Override
+        protected void onPostExecute(User returnedUser) {
+            super.onPostExecute(returnedUser);
+            progressDialog.dismiss();
+            userCallBack.done(returnedUser);
+        }
+
+        private HttpParams getHttpRequestParams() {
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            return httpRequestParams;
+        }
+    }
+
+
+
+    //**********************************************
+    public class FetchMessagesInBackground extends AsyncTask<Void, Void, User> {
+        User user;
+        GetUserCallback userCallBack;
+
+        public FetchMessagesInBackground(User user, GetUserCallback userCallBack) {
+            this.user = user;
+            this.userCallBack = userCallBack;
+        }
+
+        @Override
+        protected User doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", user.username));
+            dataToSend.add(new BasicNameValuePair("password", user.password));
+            Log.i("TYLERS INFO: ", user.username + user.password);
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+
+
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchUserData.php");
+
+            User returnedUser = null;
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                JSONObject jObject = new JSONObject(result);
+
+                if (jObject.length() != 0) {
                     Log.v("happened", "2");
                     String name = jObject.getString("name");
                     int age = jObject.getInt("age");
@@ -211,11 +285,21 @@ public class ServerRequests {
             return returnedUser;
         }
 
+
+        //**********************************************
+
         @Override
         protected void onPostExecute(User returnedUser) {
             super.onPostExecute(returnedUser);
             progressDialog.dismiss();
             userCallBack.done(returnedUser);
+        }
+
+        private HttpParams getHttpRequestParams() {
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            return httpRequestParams;
         }
     }
 }
