@@ -1,9 +1,7 @@
 package com.tonikamitv.loginregister;
 
-
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -17,16 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 
 //import android.support.v7.app.ActionBarActivity;
 
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
 
     //implements View.OnClickListener{
 
@@ -41,10 +37,10 @@ public class MainActivity extends Activity{
     Fragment fragment2 = new TabFragment2();
     Fragment fragment3 = new TabFragment3();
 
-    boolean mShowMap;
+    //boolean mShowMap;
     GoogleMap mMap;
 
-    private static final int GPS_ERRORDIALOG_REQUEST = 0;
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -66,10 +62,6 @@ public class MainActivity extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (servicesOK()){
-            Toast.makeText(this, "Ready to Map", Toast.LENGTH_SHORT).show();
-        }
 
         ///Stuff for action bar tabs navigation
         ActionBar actionBar = getActionBar();
@@ -103,6 +95,15 @@ public class MainActivity extends Activity{
 
         //userLocalStore = new UserLocalStore(this);
 
+    }
+
+
+    private boolean initMap() {
+        if (mMap == null){
+            MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.userMap);
+            mMap = mapFragment.getMap();
+        }
+        return (mMap != null);
     }
 
     @Override
@@ -197,19 +198,6 @@ public class MainActivity extends Activity{
         Log.w("Message: ", "I'm a banana!!!");
     }
 
-    public boolean servicesOK(){
-        int isAvailable = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if(isAvailable == ConnectionResult.SUCCESS){
-            return true;
-        }
-        else if (GooglePlayServicesUtil.isUserRecoverableError(isAvailable)){
-            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(isAvailable, this, GPS_ERRORDIALOG_REQUEST);
-            dialog.show();
-        }
-        else{
-            Toast.makeText(this, "Can't connect to Google Play services", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
+
 
 }
