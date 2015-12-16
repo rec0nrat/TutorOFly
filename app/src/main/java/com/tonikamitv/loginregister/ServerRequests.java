@@ -51,9 +51,9 @@ public class ServerRequests {
         new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
     }
 
-    public void fetchMessagesAsyncTask(User user, GetUserCallback userCallBack) {
+    public void fetchMessagesAsyncTask(GetMessageCallback userMessageCallback) {
         progressDialog.show();
-        new FetchMessagesInBackground(user, userCallBack).execute();
+        new FetchMessagesInBackground(userMessageCallback).execute();
     }
 
     /**tweissMess
@@ -236,21 +236,21 @@ public class ServerRequests {
 
 
     //**********************************************
-    public class FetchMessagesInBackground extends AsyncTask<Void, Void, User> {
-        User user;
-        GetUserCallback userCallBack;
+    public class FetchMessagesInBackground extends AsyncTask<Void, Void, Message> {
+        //User user;
+        GetMessageCallback userMessageCallBack;
 
-        public FetchMessagesInBackground(User user, GetUserCallback userCallBack) {
-            this.user = user;
-            this.userCallBack = userCallBack;
+        public FetchMessagesInBackground( GetMessageCallback userMessageCallBack) {
+            //this.user = user;
+            this.userMessageCallBack = userMessageCallBack;
         }
 
         @Override
-        protected User doInBackground(Void... params) {
+        protected Message doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("username", user.username));
-            dataToSend.add(new BasicNameValuePair("password", user.password));
-            Log.i("TYLERS INFO: ", user.username + user.password);
+            //dataToSend.add(new BasicNameValuePair("username", user.username));
+           // dataToSend.add(new BasicNameValuePair("password", user.password));
+            //Log.i("TYLERS INFO: ", user.username + user.password);
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -258,9 +258,9 @@ public class ServerRequests {
 
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchUserData.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchMessageData.php");
 
-            User returnedUser = null;
+            Message returnedMessages = null;
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -271,28 +271,31 @@ public class ServerRequests {
                 JSONObject jObject = new JSONObject(result);
 
                 if (jObject.length() != 0) {
-                    Log.v("happened", "2");
-                    String name = jObject.getString("name");
-                    int age = jObject.getInt("age");
+                    //Log.v("happened", "2");
+                    String name = jObject.getString("username");
+                    String message = jObject.getString("message");
 
-                    returnedUser = new User(name, age, user.username, user.password);
+                    Log.v("Message: ", message);
+
+                    returnedMessages = new Message(name, message);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return returnedUser;
+            return returnedMessages;
         }
 
 
         //**********************************************
 
         @Override
-        protected void onPostExecute(User returnedUser) {
-            super.onPostExecute(returnedUser);
+        protected void onPostExecute(Message returnedMessages) {
+            //Void returnedMessages;
+            super.onPostExecute(returnedMessages);
             progressDialog.dismiss();
-            userCallBack.done(returnedUser);
+            userMessageCallBack.done(returnedMessages);
         }
 
         private HttpParams getHttpRequestParams() {

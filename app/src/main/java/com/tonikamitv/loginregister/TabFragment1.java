@@ -16,6 +16,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by tylweiss on 11/22/2015.
  */
@@ -24,6 +26,10 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     EditText messageText;
     Button button, syncButton;
     View container;
+    ArrayList<String> userMessages = new ArrayList<String>();
+
+    ListView theListView;
+    final ListAdapter theAdapter = null; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
     //UserLocalStore userLocalStore;
 
 
@@ -34,18 +40,19 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.tab_fragment_1 ,null);
+        userMessages.add("Message1");
+        userMessages.add("Message2");
+        userMessages.add("Message10000");
 
-        String[] userMessages = {"Message1", "Message2", "Message3"};
-
-        final ListAdapter theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
-        ListView theListView = (ListView) rootView.findViewById(R.id.listView);
+        ListAdapter theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
+        theListView = (ListView) rootView.findViewById(R.id.listView);
 
         theListView.setAdapter(theAdapter);
 
         theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(getActivity(), "CLikkkking the MessssAge!!! =)",
+                Toast.makeText(getActivity(), "Messsssge Clicked!",
                         Toast.LENGTH_LONG).show();
 
             }
@@ -89,7 +96,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         });
         messageText.getText().clear();
 
-        Toast.makeText(getActivity(), "Poeeesting the POST! =)",
+        Toast.makeText(getActivity(), "Posting The Message!",
                 Toast.LENGTH_LONG).show();
 
     }
@@ -97,23 +104,39 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     public void syncMessageClicked(){
 
         ServerRequests serverRequest = new ServerRequests(getActivity());
-        Toast.makeText(getActivity(), "Seeeeinking the POSTSSS!!!!! =)",
-                Toast.LENGTH_LONG).show();
+       // Toast.makeText(getActivity(), "Seeeeinking the POSTSSS!!!!! =)",
+         //       Toast.LENGTH_LONG).show();
 
-        /*
+
         String message = messageText.getText().toString();
 
-        serverRequest.storeUserMessageInBackground(user, message, new GetUserCallback() {
+        serverRequest.fetchMessagesAsyncTask(new GetMessageCallback() {
             @Override
-            public void done(User returnedUser) {
-                if (returnedUser == null) {
+            public void done(Message returnedMessages) {
+                if (returnedMessages == null) {
                     // showErrorMessage();
                 } else {
-                    //logUserIn(returnedUser);
+
+                    userMessages.add(returnedMessages.message);
+                    ListAdapter theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
+
+                    theListView.setAdapter(theAdapter);
+
+                    theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                            Toast.makeText(getActivity(), "Messsssge Clicked!",
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+                    Toast.makeText(getActivity(), returnedMessages.message,
+                            Toast.LENGTH_LONG).show();
                 }
 
             }
-        });*/
+        });
 
     }
 
@@ -136,6 +159,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         mgr.hideSoftInputFromWindow(windowToken, 0);
 
     }
+
 
 
 }
