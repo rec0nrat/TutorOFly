@@ -3,6 +3,8 @@ package com.tonikamitv.loginregister;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
 //import android.support.v7.app.ActionBarActivity;
@@ -36,10 +37,6 @@ public class MainActivity extends Activity {
     Fragment fragment1 = new TabFragment1();
     Fragment fragment2 = new TabFragment2();
     Fragment fragment3 = new TabFragment3();
-
-    //boolean mShowMap;
-    GoogleMap mMap;
-
 
 
     @SuppressWarnings("deprecation")
@@ -70,7 +67,7 @@ public class MainActivity extends Activity {
 
         tab1 = actionBar.newTab().setText("Find Help");
         tab2 = actionBar.newTab().setText("Anonymous");
-        tab3 = actionBar.newTab().setText("Groups");
+        tab3 = actionBar.newTab().setText("User Location");
 
         tab1.setTabListener(new TabListener(fragment1));
         tab2.setTabListener(new TabListener(fragment2));
@@ -79,6 +76,9 @@ public class MainActivity extends Activity {
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
         actionBar.addTab(tab3);
+
+
+
 
         /*
         etUsername = (EditText) findViewById(R.id.etUsername);
@@ -92,18 +92,16 @@ public class MainActivity extends Activity {
         user = (User)bundle.getSerializable("user");
 
 
-
         //userLocalStore = new UserLocalStore(this);
 
     }
 
-
-    private boolean initMap() {
-        if (mMap == null){
-            MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.userMap);
-            mMap = mapFragment.getMap();
-        }
-        return (mMap != null);
+    private void addMapFragment() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        MapFragment fragment = new MapFragment();
+        transaction.add(R.id.mapView, fragment);
+        transaction.commit();
     }
 
     @Override
@@ -173,6 +171,8 @@ public class MainActivity extends Activity {
         etStudentID.setText(user.age + "");
     }
 */
+
+
     private View tryInflate(String name, Context context, AttributeSet attrs) {
         LayoutInflater li = LayoutInflater.from(context);
         View v = null;
@@ -186,6 +186,8 @@ public class MainActivity extends Activity {
         }
         return v;
     }
+
+
 
     private void setTypeFace(TextView tv) {
         tv.setTypeface(Typeface.createFromAsset(getAssets(), "AManoRegulold.ttf"));

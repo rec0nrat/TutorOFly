@@ -6,22 +6,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Groups:"
-        android:textSize="30sp"
+        android:text="User Location:"
+        android:id="@+id/tvLocation"
+        android:textSize="16sp"
         android:layout_gravity="center_horizontal" />
 
-    <fragment
-        android:id="@+id/userMap"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="top"
-        android:layout_weight="1"
-        class="com.google.android.gms.maps.MapFragment"/>
 
-   <!-- <ListView
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+            -->
+
+   <!--<ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView3"
-        android:layout_gravity="center_horizontal" /> -->
+        android:layout_gravity="center_horizontal" />
+        -->
 
 </LinearLayout>
