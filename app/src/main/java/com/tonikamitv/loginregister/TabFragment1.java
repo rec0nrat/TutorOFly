@@ -1,5 +1,4 @@
 package com.tonikamitv.loginregister;
-
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,8 +15,10 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+import java.lang.NullPointerException;
+import java.util.Arrays;
+
 
 /**
  * Created by tylweiss on 11/22/2015.
@@ -26,13 +28,10 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     EditText messageText;
     Button button, syncButton;
     View container;
-    ArrayList<String> userMessages = new ArrayList<String>();
-
+    ArrayList<String> userMessages = null;
     ListView theListView;
-    final ListAdapter theAdapter = null; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
+    ArrayAdapter theAdapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
     //UserLocalStore userLocalStore;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,14 +39,26 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.tab_fragment_1 ,null);
-        userMessages.add("Message1");
-        userMessages.add("Message2");
-        userMessages.add("Message10000");
 
-        ListAdapter theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
         theListView = (ListView) rootView.findViewById(R.id.listView);
 
+        ///userMessages.add("Message1");
+        //userMessages.add("Message2");
+        //userMessages.add("Message10000");
+        String[] ss = {"11", "22", "33"};
+        userMessages = new ArrayList<String>();
+
+        //userMessages.clear();
+       // Toast.makeText(getActivity(), userMessages.toArray().toString(),
+        //        Toast.LENGTH_LONG).show();
+
+        //set the adapter and auto refresh if list is changed
+        theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, userMessages);
         theListView.setAdapter(theAdapter);
+       // theAdapter.notifyDataSetChanged();
+        //Debug
+      //  theAdapter.add(new String("stuff"));
+
 
         theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,6 +83,8 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         syncButton.setOnClickListener(this);
         user = ((MainActivity)getActivity()).getCurrentUser();
 
+
+
         //closeKeyboard(getActivity(), messageText.getWindowToken());
         //view.findViewById(R.id.btnSyncMessage).requestFocus();
 
@@ -94,10 +107,13 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
             }
         });
+
         messageText.getText().clear();
 
         Toast.makeText(getActivity(), "Posting The Message!",
                 Toast.LENGTH_LONG).show();
+        userMessages.add(message);
+        theAdapter.notifyDataSetChanged();
 
     }
 
@@ -159,7 +175,5 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         mgr.hideSoftInputFromWindow(windowToken, 0);
 
     }
-
-
 
 }
