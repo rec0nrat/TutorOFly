@@ -78,7 +78,7 @@ public class ServerRequests {
 
             dataToSend.add(new BasicNameValuePair("UserName", user.username));
             dataToSend.add(new BasicNameValuePair("MessageText", message));
-            dataToSend.add(new BasicNameValuePair("UserID", user.age + ""));
+            dataToSend.add(new BasicNameValuePair("UserID", user.id + ""));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -128,10 +128,13 @@ public class ServerRequests {
         @Override
         protected Void doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("name", user.name));
+            dataToSend.add(new BasicNameValuePair("first_name", user.name_first));
+            dataToSend.add(new BasicNameValuePair("last_name", user.name_last));
+            dataToSend.add(new BasicNameValuePair("id", user.id + ""));
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
-            dataToSend.add(new BasicNameValuePair("age", user.age + ""));
+            dataToSend.add(new BasicNameValuePair("email", user.email));
+            dataToSend.add(new BasicNameValuePair("user_type", user.user_type.toString()));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
