@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 
 public class Register extends Activity implements View.OnClickListener{
-    EditText etName, etAge, etUsername, etPassword;
+    //EditText etName, etAge, etUsername, etPassword;
+    EditText etNameFirst, etNameLast, etUsername, etPassword, etEmail, etID;
+
     Button bRegister;
     UserLocalStore userLocalStore;
 
@@ -38,14 +40,15 @@ public class Register extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etName = (EditText) findViewById(R.id.etName);
-        etAge = (EditText) findViewById(R.id.etAge);
+        etNameFirst = (EditText) findViewById(R.id.etNameFirst);
+        etNameLast = (EditText) findViewById(R.id.etNameLast);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        etEmail = (EditText)findViewById(R.id.etEmail);
+        etID = (EditText)findViewById(R.id.etID);
         bRegister = (Button) findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(this);
-
 
     }
 
@@ -53,12 +56,16 @@ public class Register extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bRegister:
-                String name = etName.getText().toString();
+                String nameF = etNameFirst.getText().toString();
+                String nameL = etNameLast.getText().toString();
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                int age = Integer.parseInt(etAge.getText().toString());
+                String email = etEmail.getText().toString();
+                int id = Integer.parseInt(etID.getText().toString());
+                User.user_types type = User.user_types.student;
 
-                User user = new User(name, age, username, password);
+                User user = new User(nameF, nameL, id, username, password, email, type);
+               // User user = new User(name, age, username, password);
                 registerUser(user);
                 break;
         }
