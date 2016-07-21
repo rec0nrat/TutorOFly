@@ -25,6 +25,7 @@ public class Login extends Activity implements View.OnClickListener {
     EditText etUsername, etPassword;
 
     UserLocalStore userLocalStore;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class Login extends Activity implements View.OnClickListener {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                //User user = new User(username, password);
+                //user = new User(username, password);
 
                 //authenticate(user);
                 break;
@@ -99,8 +100,8 @@ public class Login extends Activity implements View.OnClickListener {
     }
 
     private void logUserIn(User returnedUser) {
-        userLocalStore.storeUserData(returnedUser);
-        userLocalStore.setUserLoggedIn(true);
+        //userLocalStore.storeUserData(returnedUser);
+        //userLocalStore.setUserLoggedIn(true);
         Bundle extras = new Bundle();
         extras.putSerializable("user", userLocalStore.getLoggedInUser());
         Intent intent = new Intent(this, MainActivity.class);
