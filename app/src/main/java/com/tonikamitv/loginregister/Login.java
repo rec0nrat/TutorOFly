@@ -64,9 +64,9 @@ public class Login extends Activity implements View.OnClickListener {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                User user = new User(username, password);
+                //User user = new User(username, password);
 
-                authenticate(user);
+                //authenticate(user);
                 break;
             case R.id.tvRegisterLink:
                 Intent registerIntent = new Intent(Login.this, Register.class);

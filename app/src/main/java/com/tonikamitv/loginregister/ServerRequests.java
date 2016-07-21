@@ -26,6 +26,8 @@ public class ServerRequests {
     ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
     public static final String SERVER_ADDRESS = "http://52.34.0.76/";
+    //public static final String SERVER_ADDRESS = "http://www.cbokit.com/";
+
 
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
@@ -76,20 +78,21 @@ public class ServerRequests {
         protected Void doInBackground(Void... voids) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
 
-            dataToSend.add(new BasicNameValuePair("UserName", user.username));
-            dataToSend.add(new BasicNameValuePair("MessageText", message));
-            dataToSend.add(new BasicNameValuePair("UserID", user.id + ""));
+            dataToSend.add(new BasicNameValuePair("username", user.username));
+            dataToSend.add(new BasicNameValuePair("message", message));
+            dataToSend.add(new BasicNameValuePair("id", user.id + ""));
+            dataToSend.add(new BasicNameValuePair("tags", "TBD"));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
             HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
 
-            Log.i("Username: ", user.username);
-            Log.i("Message: ", message);
-            Log.i("StudentID: ", user.age +"");
+          //  Log.i("Username: ", user.username);
+          //  Log.i("Message: ", message);
+           // Log.i("StudentID: ", user.age +"");
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "SubmitMessage.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "post_message_android.php");
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -128,8 +131,8 @@ public class ServerRequests {
         @Override
         protected Void doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("first_name", user.name_first));
-            dataToSend.add(new BasicNameValuePair("last_name", user.name_last));
+            dataToSend.add(new BasicNameValuePair("fname", user.name_first));
+            dataToSend.add(new BasicNameValuePair("lname", user.name_last));
             dataToSend.add(new BasicNameValuePair("id", user.id + ""));
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
@@ -142,14 +145,43 @@ public class ServerRequests {
             //HttpParams httpRequestParams = getHttpRequestParams();
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "Register.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "register_android.php");
 
+            //User returnedUser = null;
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
-                client.execute(post);
+                //client.execute(post);
+
+
+                HttpResponse httpResponse = client.execute(post);
+/*
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                JSONObject jObject = new JSONObject(result);
+
+                if (jObject.length() != 0){
+
+                    String fname = jObject.getString("fname"),
+                            lname = jObject.getString("lname"),
+                            username = jObject.getString("username"),
+                            password = jObject.getString("password"),
+                            email = jObject.getString("email");
+                            //user_type_str = jObject.getString("user_type");
+                    int id = jObject.getInt("id");
+                    User.user_types user_type = User.user_types.student;
+
+
+                   // if(user_type_str.equals("student"))  user_type = User.user_types.student;
+                   // else user_type = User.user_types.student;
+
+
+                    returnedUser = new User( fname, lname, id, username, password, email, user_type);
+                    */
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
+//            Log.i("The New User: ", returnedUser.username);
 
             return null;
         }
@@ -193,7 +225,7 @@ public class ServerRequests {
 
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchUserData.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "login_android.php");
 
             User returnedUser = null;
 
@@ -207,10 +239,21 @@ public class ServerRequests {
 
                 if (jObject.length() != 0){
 
-                    String name = jObject.getString("name");
-                    int age = jObject.getInt("age");
+                    String fname = jObject.getString("fname"),
+                            lname = jObject.getString("lname"),
+                            username = jObject.getString("username"),
+                            password = jObject.getString("password"),
+                            email = jObject.getString("email"),
+                            user_type_str = jObject.getString("user_type");
+                    int id = jObject.getInt("id");
+                    User.user_types user_type;
 
-                    returnedUser = new User(name, age, user.username, user.password);
+
+                    if(user_type_str.equals("student"))  user_type = User.user_types.student;
+                    else user_type = User.user_types.student;
+
+
+                    returnedUser = new User( fname, lname, id, username, password, email, user_type);
                 }
 
             } catch (Exception e) {

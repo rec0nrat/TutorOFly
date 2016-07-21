@@ -27,10 +27,10 @@ public class MainActivity extends Activity {
 
     //implements View.OnClickListener{
 
-    UserLocalStore userLocalStore;
+    //UserLocalStore userLocalStore;
     User user;
-    EditText etName, etStudentID, etUsername;
-    Button bLogout;
+    //EditText etName, etStudentID, etUsername;
+    //Button bLogout;
 
     ActionBar.Tab tab1, tab2, tab3;
 
