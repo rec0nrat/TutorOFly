@@ -65,9 +65,9 @@ public class Login extends Activity implements View.OnClickListener {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                //user = new User(username, password);
+                user = new User(username, password);
 
-                //authenticate(user);
+                authenticate(user);
                 break;
             case R.id.tvRegisterLink:
                 Intent registerIntent = new Intent(Login.this, Register.class);
@@ -83,7 +83,7 @@ public class Login extends Activity implements View.OnClickListener {
         serverRequest.fetchUserDataAsyncTask(user, new GetUserCallback() {
             @Override
             public void done(User returnedUser) {
-                if (returnedUser == null) {
+                if (returnedUser.id == 0 ) {
                     showErrorMessage();
                 } else {
                     logUserIn(returnedUser);
@@ -100,10 +100,10 @@ public class Login extends Activity implements View.OnClickListener {
     }
 
     private void logUserIn(User returnedUser) {
-        //userLocalStore.storeUserData(returnedUser);
-        //userLocalStore.setUserLoggedIn(true);
+        userLocalStore.storeUserData(returnedUser);
+        userLocalStore.setUserLoggedIn(true);
         Bundle extras = new Bundle();
-        extras.putSerializable("user", userLocalStore.getLoggedInUser());
+        extras.putSerializable("user", user);  //userLocalStore.getLoggedInUser());
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtras(extras);
        // Log.i("Username: ", userLocalStore.getLoggedInUser().username.toString());

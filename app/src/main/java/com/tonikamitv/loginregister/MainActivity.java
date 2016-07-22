@@ -8,12 +8,14 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ public class MainActivity extends Activity {
 
     //implements View.OnClickListener{
 
-    //UserLocalStore userLocalStore;
+    UserLocalStore userLocalStore;
     User user;
     //EditText etName, etStudentID, etUsername;
     //Button bLogout;
@@ -92,7 +94,7 @@ public class MainActivity extends Activity {
         user = (User)bundle.getSerializable("user");
 
 
-        //userLocalStore = new UserLocalStore(this);
+        userLocalStore = new UserLocalStore(this);
 
     }
 
@@ -201,5 +203,10 @@ public class MainActivity extends Activity {
     }
 
 
+    public static void closeKeyboard(Context c, IBinder windowToken) {
+        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(windowToken, 0);
+
+    }
 
 }

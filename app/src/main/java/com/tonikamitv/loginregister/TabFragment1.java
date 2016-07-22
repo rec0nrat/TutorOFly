@@ -1,23 +1,19 @@
 package com.tonikamitv.loginregister;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.lang.NullPointerException;
-import java.util.Arrays;
+import java.util.Objects;
 
 
 /**
@@ -28,10 +24,10 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     EditText messageText;
     Button button, syncButton;
     View container;
-    ArrayList<String> userMessages = null;
+    ArrayList<String> help_board_messages = null;
     ListView theListView;
-    ArrayAdapter theAdapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
-    //UserLocalStore userLocalStore;
+    ArrayAdapter help_board_adapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
+    UserLocalStore userLocalStore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,19 +38,19 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         theListView = (ListView) rootView.findViewById(R.id.listView);
 
-        ///userMessages.add("Message1");
-        //userMessages.add("Message2");
-        //userMessages.add("Message10000");
+        ///help_board_messages.add("Message1");
+        //help_board_messages.add("Message2");
+        //help_board_messages.add("Message10000");
         String[] ss = {"11", "22", "33"};
-        userMessages = new ArrayList<String>();
+        help_board_messages = new ArrayList<String>();
 
-        //userMessages.clear();
-       // Toast.makeText(getActivity(), userMessages.toArray().toString(),
+        //help_board_messages.clear();
+       // Toast.makeText(getActivity(), help_board_messages.toArray().toString(),
         //        Toast.LENGTH_LONG).show();
 
         //set the adapter and auto refresh if list is changed
-        theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, userMessages);
-        theListView.setAdapter(theAdapter);
+        help_board_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
+        theListView.setAdapter(help_board_adapter);
        // theAdapter.notifyDataSetChanged();
         //Debug
       //  theAdapter.add(new String("stuff"));
@@ -85,7 +81,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
 
 
-        //closeKeyboard(getActivity(), messageText.getWindowToken());
+     //   MainActivity.closeKeyboard(getActivity().getApplicationContext(), this.container.getWindowToken());
         //view.findViewById(R.id.btnSyncMessage).requestFocus();
 
     }
@@ -94,7 +90,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         ServerRequests serverRequest = new ServerRequests(getActivity());
 
-        String message = messageText.getText().toString();
+        Message message = new Message( user.username, messageText.getText().toString());
 
         serverRequest.storeUserMessageInBackground(user, message, new GetUserCallback() {
             @Override
@@ -112,8 +108,9 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         Toast.makeText(getActivity(), "Posting The Message!",
                 Toast.LENGTH_LONG).show();
-        userMessages.add(message);
-        theAdapter.notifyDataSetChanged();
+        help_board_messages.add(message.getInit_msg_txt());
+        help_board_adapter.notifyDataSetChanged();
+        MainActivity.closeKeyboard(this.getActivity(), this.container.getWindowToken());
 
     }
 
@@ -133,10 +130,13 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
                     // showErrorMessage();
                 } else {
 
-                    userMessages.add(returnedMessages.message);
-                    ListAdapter theAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, userMessages);
+                    help_board_messages.add(returnedMessages.getInit_msg_txt());
 
-                    theListView.setAdapter(theAdapter);
+
+                    ArrayAdapter help_board_adapter;
+                    help_board_adapter = new ArrayAdapter(getActivity(), android.R.layout.expandable_list_content, help_board_messages);
+
+                    theListView.setAdapter(help_board_adapter);
 
                     theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -147,7 +147,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
                         }
                     });
 
-                    Toast.makeText(getActivity(), returnedMessages.message,
+                    Toast.makeText(getActivity(), returnedMessages.getInit_msg_txt(),
                             Toast.LENGTH_LONG).show();
                 }
 
@@ -170,10 +170,6 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         }
     }
 
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
 
-    }
 
 }

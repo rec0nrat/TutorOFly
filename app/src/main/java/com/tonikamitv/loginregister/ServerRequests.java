@@ -17,6 +17,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class ServerRequests {
     }
 
     //Message Post/Sync methods
-    public void storeUserMessageInBackground(User user, String message, GetUserCallback userCallBack){
+    public void storeUserMessageInBackground(User user, Message message, GetUserCallback userCallBack){
         progressDialog.show();
         new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
     }
@@ -66,9 +67,9 @@ public class ServerRequests {
     public class StoreUserMessageAsyncTask extends AsyncTask<Void, Void, Void>{
         User user;
         GetUserCallback userCallBack;
-        String message;
+        Message message;
 
-        public StoreUserMessageAsyncTask(User user, String message, GetUserCallback userCallBack){
+        public StoreUserMessageAsyncTask(User user, Message message, GetUserCallback userCallBack){
             this.user = user;
             this.userCallBack = userCallBack;
             this.message = message;
@@ -79,9 +80,9 @@ public class ServerRequests {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
 
             dataToSend.add(new BasicNameValuePair("username", user.username));
-            dataToSend.add(new BasicNameValuePair("message", message));
+            dataToSend.add(new BasicNameValuePair("message", message.getInit_msg_txt()));
             dataToSend.add(new BasicNameValuePair("id", user.id + ""));
-            dataToSend.add(new BasicNameValuePair("tags", "TBD"));
+            dataToSend.add(new BasicNameValuePair("tag_id", message.getTag_id() + ""));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -216,44 +217,49 @@ public class ServerRequests {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
-            //Log.i("TYLERS INFO: " , user.username + user.password);
+            Log.i("TYLERS INFO: " , user.username + user.password);
+
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
             HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
 
 
-
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "login_android.php");
 
-            User returnedUser = null;
+            User returnedUser = new User(user.username, user.password);
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
                 HttpResponse httpResponse = client.execute(post);
 
                 HttpEntity entity = httpResponse.getEntity();
+                Log.i("Login", "Returned Login Results: " + entity);
+
                 String result = EntityUtils.toString(entity);
+                Log.i("Login", "Returned Login Results: " + result);
+                //JSONArray jarray = new JSONArray(result);
                 JSONObject jObject = new JSONObject(result);
 
+
                 if (jObject.length() != 0){
+                    String  fname = jObject.getString("first_name"),
+                            lname = jObject.getString("last_name"),
+                            username = jObject.getString("user_name"),
+                            password = user.password,
+                            email = jObject.getString("email");
+                           // user_type_str = jObject.getString("user_type");
+                    int id = jObject.getInt("user_id");
+                    User.user_types user_type = User.user_types.student;
 
-                    String fname = jObject.getString("fname"),
-                            lname = jObject.getString("lname"),
-                            username = jObject.getString("username"),
-                            password = jObject.getString("password"),
-                            email = jObject.getString("email"),
-                            user_type_str = jObject.getString("user_type");
-                    int id = jObject.getInt("id");
-                    User.user_types user_type;
 
-
-                    if(user_type_str.equals("student"))  user_type = User.user_types.student;
-                    else user_type = User.user_types.student;
+                   // if(user_type_str.equals("student"))  user_type = User.user_types.student;
+                   // else user_type = User.user_types.student;
 
 
                     returnedUser = new User( fname, lname, id, username, password, email, user_type);
+                    Log.i("Login", "returnedUSer: " + returnedUser.id);
                 }
 
             } catch (Exception e) {
@@ -304,9 +310,9 @@ public class ServerRequests {
 
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchMessageData.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "get_messages_help.php");
 
-            Message returnedMessages = null;
+            Message[] returnedMessages = null;
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -314,6 +320,7 @@ public class ServerRequests {
 
                 HttpEntity entity = httpResponse.getEntity();
                 String result = EntityUtils.toString(entity);
+                JSONArray jarray = new JSONArray(result);
                 JSONObject jObject = new JSONObject(result);
 
                 if (jObject.length() != 0) {
