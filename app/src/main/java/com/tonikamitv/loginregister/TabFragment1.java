@@ -24,7 +24,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     EditText messageText;
     Button button, syncButton;
     View container;
-    ArrayList<String> help_board_messages = null;
+    ArrayList<Message> help_board_messages;
     ListView theListView;
     ArrayAdapter help_board_adapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
     UserLocalStore userLocalStore;
@@ -41,15 +41,16 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         ///help_board_messages.add("Message1");
         //help_board_messages.add("Message2");
         //help_board_messages.add("Message10000");
-        String[] ss = {"11", "22", "33"};
-        help_board_messages = new ArrayList<String>();
+
+        help_board_messages = new ArrayList<Message>();
+
 
         //help_board_messages.clear();
        // Toast.makeText(getActivity(), help_board_messages.toArray().toString(),
         //        Toast.LENGTH_LONG).show();
 
         //set the adapter and auto refresh if list is changed
-        help_board_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
+        help_board_adapter = new MessageArrayAdapter(this.getActivity(), help_board_messages);
         theListView.setAdapter(help_board_adapter);
        // theAdapter.notifyDataSetChanged();
         //Debug
@@ -79,9 +80,11 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         syncButton.setOnClickListener(this);
         user = ((MainActivity)getActivity()).getCurrentUser();
 
+        help_board_messages.add(new Message("this is the newest and coolest message ever!!!", ((MainActivity) getActivity()).getCurrentUser()));
+        help_board_messages.add(new Message("this is the other new newest and coolest message ever!!!", ((MainActivity) getActivity()).getCurrentUser()));
 
-
-     //   MainActivity.closeKeyboard(getActivity().getApplicationContext(), this.container.getWindowToken());
+        help_board_adapter.notifyDataSetChanged();
+        //   MainActivity.closeKeyboard(getActivity().getApplicationContext(), this.container.getWindowToken());
         //view.findViewById(R.id.btnSyncMessage).requestFocus();
 
     }
@@ -90,7 +93,8 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         ServerRequests serverRequest = new ServerRequests(getActivity());
 
-        Message message = new Message( user.username, messageText.getText().toString());
+       Message message = new Message(messageText.getText().toString(), user);
+        help_board_messages.add(message);
 
         serverRequest.storeUserMessageInBackground(user, message, new GetUserCallback() {
             @Override
@@ -108,9 +112,9 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         Toast.makeText(getActivity(), "Posting The Message!",
                 Toast.LENGTH_LONG).show();
-        help_board_messages.add(message.getInit_msg_txt());
+        help_board_messages.add(message);
         help_board_adapter.notifyDataSetChanged();
-        MainActivity.closeKeyboard(this.getActivity(), this.container.getWindowToken());
+        //MainActivity.closeKeyboard(this.getActivity(), this.container.getWindowToken());
 
     }
 
@@ -121,7 +125,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
          //       Toast.LENGTH_LONG).show();
 
 
-        String message = messageText.getText().toString();
+        final String message = messageText.getText().toString();
 
         serverRequest.fetchMessagesAsyncTask(new GetMessageCallback() {
             @Override
@@ -130,7 +134,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
                     // showErrorMessage();
                 } else {
 
-                    help_board_messages.add(returnedMessages.getInit_msg_txt());
+                    help_board_messages.add(new Message(message, ((MainActivity) getActivity()).getCurrentUser()));
 
 
                     ArrayAdapter help_board_adapter;

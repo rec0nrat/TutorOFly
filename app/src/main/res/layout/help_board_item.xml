@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#6e091433"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/user_avatar_img"
+            android:src="@drawable/anon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Username"
+                android:id="@+id/user_name_txt"
+                android:layout_marginLeft="10dp"
+                android:textSize="20dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_text_default_material_dark"
+                android:textStyle="bold"
+                android:layout_above="@+id/post_date_init_txt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Posted on 7/22/2016"
+                android:id="@+id/post_date_init_txt"
+                android:layout_marginLeft="10dp"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_text_default_material_dark"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="false" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="What is the meaning of life and why should we go on living?"
+        android:id="@+id/message_content_txt"
+        android:layout_marginLeft="5dp"
+        android:textColor="#ffd04f"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="#TAG1 #TAG2 #TAG3"
+        android:id="@+id/message_hashtag_txt"
+        android:layout_marginLeft="5dp"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:layout_marginTop="4dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/comment_icon_img"
+            android:src="@drawable/comment"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/comment_count_txt"
+            android:layout_marginRight="2dp"
+            android:layout_alignTop="@+id/comment_count_txt"
+            android:layout_alignBottom="@+id/comment_count_txt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="##"
+            android:id="@+id/comment_count_txt"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:id="@+id/like_icon_img"
+            android:layout_alignParentRight="false"
+            android:layout_alignTop="@+id/comment_count_txt"
+            android:layout_toLeftOf="@+id/like_count_txt"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/like"
+            android:layout_alignBottom="@+id/like_count_txt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="##"
+            android:id="@+id/like_count_txt"
+            android:layout_alignParentRight="false"
+            android:layout_marginRight="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/comment_icon_img"
+            android:layout_toLeftOf="@+id/comment_icon_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Last Updated on 7/23/2016 @ 2:35 pm"
+            android:id="@+id/message_last_updated_txt"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:textSize="14dp"
+            android:textStyle="italic"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

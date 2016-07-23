@@ -1,6 +1,7 @@
 package com.tonikamitv.loginregister;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -120,10 +121,24 @@ public class Message implements Serializable {
 
 
 
-    public Message(String username, String message ){
+    public Message(String message, User user){
 
-        this.username = username;
+        //new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
+        this.username = user.username;
         this.init_msg_txt = message;
+        Date date = new Date();
+
+        setPost_id(0);
+        setUser_id(user.id);
+        setTag_id(0);
+        setHelp_cnt(0);
+        setComment_cnt(1);
+        setSolved_cnt(1);
+        setLikes_cnt(1);
+        setInit_time_stamp(date);
+        setLast_update(getInit_time_stamp());
+        setIs_anon(false);
+
     }
 
 

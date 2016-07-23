@@ -312,7 +312,7 @@ public class ServerRequests {
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "get_messages_help.php");
 
-            Message[] returnedMessages = null;
+            Message returnedMessages = null;
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -325,12 +325,12 @@ public class ServerRequests {
 
                 if (jObject.length() != 0) {
                     //Log.v("happened", "2");
-                    String name = jObject.getString("username");
-                    String message = jObject.getString("message");
+                    //String name = jObject.getString("username");
+                   // Message message = jObject.getString("message");
 
-                    Log.v("Message: ", message);
+                   // Log.v("Message: ", message);
 
-                    returnedMessages = new Message(name, message);
+                   // returnedMessages = new Message(name, message);
                 }
 
             } catch (Exception e) {
