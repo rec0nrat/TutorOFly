@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -60,6 +62,9 @@ public class Login extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
+
+
         switch (view.getId()) {
             case R.id.bLogin:
                 String username = etUsername.getText().toString();
@@ -86,6 +91,7 @@ public class Login extends Activity implements View.OnClickListener {
                 if (returnedUser.id == 0 ) {
                     showErrorMessage();
                 } else {
+
                     logUserIn(returnedUser);
                 }
             }
@@ -102,8 +108,10 @@ public class Login extends Activity implements View.OnClickListener {
     private void logUserIn(User returnedUser) {
         userLocalStore.storeUserData(returnedUser);
         userLocalStore.setUserLoggedIn(true);
+        returnedUser.status = true;
+        user = returnedUser;
         Bundle extras = new Bundle();
-        extras.putSerializable("user", user);  //userLocalStore.getLoggedInUser());
+        extras.putSerializable("user", returnedUser);  //userLocalStore.getLoggedInUser());
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtras(extras);
        // Log.i("Username: ", userLocalStore.getLoggedInUser().username.toString());

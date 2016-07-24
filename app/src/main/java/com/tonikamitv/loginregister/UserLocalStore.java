@@ -18,12 +18,16 @@ public class UserLocalStore {
 
     public void storeUserData(User user) {
         SharedPreferences.Editor userLocalDatabaseEditor = userLocalDatabase.edit();
-        userLocalDatabaseEditor.putString("fname", user.name_first);
-        userLocalDatabaseEditor.putString("lname", user.name_last);
+        userLocalDatabaseEditor.putString("name_first", user.name_first);
+        userLocalDatabaseEditor.putString("name_last", user.name_last);
+        userLocalDatabaseEditor.putString("hot_spot_id", user.hot_Spot_id +"");
+        userLocalDatabaseEditor.putString("longitude", user.longitude+"");
+        userLocalDatabaseEditor.putString("latitude", user.latitude+"");
         userLocalDatabaseEditor.putString("id", user.id + "");
         userLocalDatabaseEditor.putString("username", user.username);
         userLocalDatabaseEditor.putString("password", user.password);
         userLocalDatabaseEditor.putString("email", user.email);
+        userLocalDatabaseEditor.putString("status", user.status+"");
         userLocalDatabaseEditor.putString("user_type", user.user_type.toString());
         userLocalDatabaseEditor.commit();
     }
@@ -45,8 +49,10 @@ public class UserLocalStore {
             return null;
         }
 
-        String fname = userLocalDatabase.getString("fname", "");
-        String lname = userLocalDatabase.getString("lname", "");
+        String fname = userLocalDatabase.getString("name_first", "");
+        String lname = userLocalDatabase.getString("name_last", "");
+        userLocalDatabase.getString("status","");
+
         int id = userLocalDatabase.getInt("id", 0);
         String username = userLocalDatabase.getString("username", "");
         String password = userLocalDatabase.getString("password", "");
@@ -55,6 +61,7 @@ public class UserLocalStore {
 
 
         User user = new User(fname, lname, id, username, password, email, User.user_types.student);
+       // return user;
         return user;
     }
 }

@@ -1,7 +1,10 @@
 package com.tonikamitv.loginregister;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -91,19 +94,19 @@ public class Message implements Serializable {
         this.likes_cnt = likes_cnt;
     }
 
-    public Date getInit_time_stamp() {
+    public String getInit_time_stamp() {
         return init_time_stamp;
     }
 
-    public void setInit_time_stamp(Date init_time_stamp) {
+    public void setInit_time_stamp(String init_time_stamp) {
         this.init_time_stamp = init_time_stamp;
     }
 
-    public Date getLast_update() {
+    public String getLast_update() {
         return last_update;
     }
 
-    public void setLast_update(Date last_update) {
+    public void setLast_update(String last_update) {
         this.last_update = last_update;
     }
 
@@ -116,7 +119,7 @@ public class Message implements Serializable {
     }
 
     private int post_id, user_id, tag_id, help_cnt, comment_cnt, solved_cnt, likes_cnt;
-    private Date  init_time_stamp, last_update;
+    private String  init_time_stamp, last_update, title;
     private boolean is_anon;
 
 
@@ -126,20 +129,48 @@ public class Message implements Serializable {
         //new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
         this.username = user.username;
         this.init_msg_txt = message;
-        Date date = new Date();
+        this.title = (message.length() > 70) ?  message.substring(0,67) + "..." : message;
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
-        setPost_id(0);
-        setUser_id(user.id);
-        setTag_id(0);
-        setHelp_cnt(0);
-        setComment_cnt(1);
-        setSolved_cnt(1);
-        setLikes_cnt(1);
-        setInit_time_stamp(date);
-        setLast_update(getInit_time_stamp());
-        setIs_anon(false);
+        this.post_id = 0;
+        this.user_id = user.id;
+        this.tag_id = 1;
+        this.help_cnt = 0;
+        this.comment_cnt = 0;
+        this.solved_cnt = 0;
+        this.likes_cnt = 0;
+        this.init_time_stamp = timestamp.toString();
+        this.last_update = timestamp.toString();
+        this.is_anon = false;
+
+       // java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+       // Log.i("Date/Time Request:  ", currentTimestamp.toString());
 
     }
 
+    public Message( String init_txt,  String username, String timestamp, String update, int post_id, int user_id, int tag_id, int help, int comment,
+                   int solved, int likes, boolean anon){
+        this.username = username;
+        this.init_msg_txt = init_txt;
+        //java.sql.Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+        this.title = (init_txt.length() > 70) ?  init_txt.substring(0,67) + "..." : init_txt;
+        this.post_id = post_id;
+        this.user_id = user_id;
+        this.tag_id = tag_id;
+        this.help_cnt = help;
+        this.comment_cnt = comment;
+        this.solved_cnt = solved;
+        this.likes_cnt = likes;
+        this.init_time_stamp = timestamp;
+        this.last_update = update;
+        this.is_anon = anon;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

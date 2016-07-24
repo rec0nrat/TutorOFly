@@ -41,14 +41,17 @@ class MessageArrayAdapter extends ArrayAdapter<Message>{
 
         Message message = getItem(position);
 
+        int likes = message.getLikes_cnt();
+        int comments = message.getComment_cnt();
+
         user_avatar_img.setImageResource(R.drawable.anon);
         user_name_txt.setText(message.getUsername());
         post_date_init_txt.setText((CharSequence)message.getInit_time_stamp().toString());
-        message_content_txt.setText(message.getInit_msg_txt());
+        message_content_txt.setText(message.getTitle());
         message_hashtag_txt.setText(new String("#ACS"));
         message_last_updated_txt.setText((CharSequence) message.getLast_update().toString());
-        like_count_txt.setText( "0");
-        comment_count_txt.setText("0");
+        like_count_txt.setText( Integer.toString(likes));
+        comment_count_txt.setText(Integer.toString(comments));
         like_icon_img.setImageResource(R.drawable.like);
         comment_icon_img.setImageResource(R.drawable.comment);
 

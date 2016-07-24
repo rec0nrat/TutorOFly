@@ -1,9 +1,13 @@
 package com.tonikamitv.loginregister;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -11,9 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -28,6 +36,97 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     ListView theListView;
     ArrayAdapter help_board_adapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
     UserLocalStore userLocalStore;
+    Timer t = new Timer();
+    TimerTask refresh_messages;
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            //
+            // Do the stuff
+            //
+
+
+            ServerRequests serverRequest = new ServerRequests(getActivity());
+
+
+            serverRequest.fetchMessagesAsyncTask(new GetMessageCallback() {
+                @Override
+                public void done(ArrayList<Message> returnedMessages) {
+                    if (returnedMessages == null) {
+                        // showErrorMessage();
+                    } else {
+
+                        if( help_board_messages.isEmpty()){
+                            for(Message message: returnedMessages) {
+                                help_board_messages.add(message);
+                                help_board_adapter.notifyDataSetChanged();
+                            }
+                        }else {
+
+                            ArrayList<Message> add_list = new ArrayList<Message>();
+
+                            for (Message temp : returnedMessages) {
+                                boolean flag = true;
+                                for (Message message : help_board_messages) {
+                                    //Log.i("Iterations", " returned:" + temp.toString() + "  actual:" + message.toString());
+                                    if (temp.getPost_id() == message.getPost_id()) {
+                                        flag = false;
+                                        //Log.i("check", "check");
+                                    }
+                                }
+                                if(flag) add_list.add(temp);
+                            }
+
+                            for (Message message : add_list) {
+                                help_board_messages.add(message);
+                                help_board_adapter.notifyDataSetChanged();
+                            }
+                        }
+
+
+                        //help_board_adapter.notifyDataSetChanged();
+
+
+                        // ArrayAdapter help_board_adapter;
+                        // help_board_adapter = new ArrayAdapter(getActivity(), android.R.layout.expandable_list_content, help_board_messages);
+
+                        //  theListView.setAdapter(help_board_adapter);
+
+                        /*
+                        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                                TextView msg_txt = (TextView)view.findViewById(R.id.message_content_txt);
+
+                                Toast.makeText(getActivity(), "Messsssge Clicked!",
+                                        Toast.LENGTH_LONG).show();
+
+                                if(msg_txt.getText().length() <= 23) {
+                                    msg_txt.setText(help_board_messages.get(position).getInit_msg_txt());
+                                }else  {
+                                    msg_txt.setText(help_board_messages.get(position).getTitle());
+                                }
+
+
+                            }
+                        });*/
+
+
+                    }
+
+                }
+            });
+
+            Toast.makeText(getActivity(), "Messages Refreshed!!!",
+                    Toast.LENGTH_LONG).show();
+
+            handler.postDelayed(this, 30000);
+        }
+    };
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,22 +151,10 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         //set the adapter and auto refresh if list is changed
         help_board_adapter = new MessageArrayAdapter(this.getActivity(), help_board_messages);
         theListView.setAdapter(help_board_adapter);
-       // theAdapter.notifyDataSetChanged();
-        //Debug
-      //  theAdapter.add(new String("stuff"));
-
-
-        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(getActivity(), "Messsssge Clicked!",
-                        Toast.LENGTH_LONG).show();
-
-            }
-        });
 
 
         return rootView;
+
     }
 
     @Override
@@ -79,13 +166,13 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
         button.setOnClickListener(this);
         syncButton.setOnClickListener(this);
         user = ((MainActivity)getActivity()).getCurrentUser();
-
-        help_board_messages.add(new Message("this is the newest and coolest message ever!!!", ((MainActivity) getActivity()).getCurrentUser()));
-        help_board_messages.add(new Message("this is the other new newest and coolest message ever!!!", ((MainActivity) getActivity()).getCurrentUser()));
-
-        help_board_adapter.notifyDataSetChanged();
+        // help_board_adapter.notifyDataSetChanged();
         //   MainActivity.closeKeyboard(getActivity().getApplicationContext(), this.container.getWindowToken());
         //view.findViewById(R.id.btnSyncMessage).requestFocus();
+        syncMessageClicked();
+
+
+
 
     }
 
@@ -93,14 +180,15 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         ServerRequests serverRequest = new ServerRequests(getActivity());
 
-       Message message = new Message(messageText.getText().toString(), user);
-        help_board_messages.add(message);
+       final Message message = new Message(messageText.getText().toString(), user);
+        //help_board_messages.add(message);
 
-        serverRequest.storeUserMessageInBackground(user, message, new GetUserCallback() {
+        serverRequest.storeUserMessageInBackground(user, message, new GetMessageCallback() {
             @Override
-            public void done(User returnedUser) {
-                if (returnedUser == null) {
-                    // showErrorMessage();
+            public void done(ArrayList<Message> returnedMessages) {
+                if (returnedMessages == null) {
+                    help_board_messages.add(0,message);
+                    help_board_adapter.notifyDataSetChanged();
                 } else {
                     //logUserIn(returnedUser);
                 }
@@ -112,51 +200,113 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         Toast.makeText(getActivity(), "Posting The Message!",
                 Toast.LENGTH_LONG).show();
-        help_board_messages.add(message);
-        help_board_adapter.notifyDataSetChanged();
+        //.add(message);
+        //help_board_adapter.notifyDataSetChanged();
+        ((MainActivity)getActivity()).hide_keys();
         //MainActivity.closeKeyboard(this.getActivity(), this.container.getWindowToken());
 
     }
 
+
+
     public void syncMessageClicked(){
 
-        ServerRequests serverRequest = new ServerRequests(getActivity());
-       // Toast.makeText(getActivity(), "Seeeeinking the POSTSSS!!!!! =)",
-         //       Toast.LENGTH_LONG).show();
+
+                ServerRequests serverRequest = new ServerRequests(getActivity());
+                // Toast.makeText(getActivity(), "Seeeeinking the POSTSSS!!!!! =)",
+                //       Toast.LENGTH_LONG).show();
+                //((MainActivity)getActivity()).hide_keys();
 
 
-        final String message = messageText.getText().toString();
+                serverRequest.fetchMessagesAsyncTask(new GetMessageCallback() {
+                    @Override
+                    public void done(ArrayList<Message> returnedMessages) {
 
-        serverRequest.fetchMessagesAsyncTask(new GetMessageCallback() {
-            @Override
-            public void done(Message returnedMessages) {
-                if (returnedMessages == null) {
-                    // showErrorMessage();
-                } else {
-
-                    help_board_messages.add(new Message(message, ((MainActivity) getActivity()).getCurrentUser()));
+                        if (returnedMessages == null) {
+                            // showErrorMessage();
+                        } else {
 
 
-                    ArrayAdapter help_board_adapter;
-                    help_board_adapter = new ArrayAdapter(getActivity(), android.R.layout.expandable_list_content, help_board_messages);
+                            if( help_board_messages.isEmpty()){
+                                for(Message message: returnedMessages) {
+                                    help_board_messages.add(message);
+                                    help_board_adapter.notifyDataSetChanged();
+                                }
+                            }else {
 
-                    theListView.setAdapter(help_board_adapter);
+                                ArrayList<Message> add_list = new ArrayList<Message>();
 
-                    theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                            Toast.makeText(getActivity(), "Messsssge Clicked!",
-                                    Toast.LENGTH_LONG).show();
+                                for (Message temp : returnedMessages) {
+                                    boolean flag = true;
+                                    for (Message message : help_board_messages) {
+                                        //Log.i("Iterations", " returned:" + temp.toString() + "  actual:" + message.toString());
+                                        if (temp.getPost_id() == message.getPost_id()) {
+                                            flag = false;
+                                            //Log.i("check", "check");
+                                        }
+                                    }
+                                    if(flag) add_list.add(temp);
+                                }
+
+                                for (Message message : add_list) {
+                                    help_board_messages.add(message);
+                                    help_board_adapter.notifyDataSetChanged();
+                                }
+                            }
+
+
+                            // ArrayAdapter help_board_adapter;
+                            // help_board_adapter = new ArrayAdapter(getActivity(), android.R.layout.expandable_list_content, help_board_messages);
+
+                            //  theListView.setAdapter(help_board_adapter);
+
+                            theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                                    TextView msg_txt = (TextView)view.findViewById(R.id.message_content_txt);
+
+                                   // Toast.makeText(getActivity(), "Messsssge Clicked!",
+                                     //       Toast.LENGTH_LONG).show();
+
+                                    if(help_board_messages.get(position).getInit_msg_txt().length() > 70) {
+                                       // runnable.run();
+
+                                        if (msg_txt.getText().length() <= 70) {
+                                            msg_txt.setText(help_board_messages.get(position).getInit_msg_txt());
+                                        } else {
+                                            msg_txt.setText(help_board_messages.get(position).getTitle());
+                                        }
+                                        //help_board_adapter.notifyDataSetChanged();
+                                    }
+
+                                    ((MainActivity)getActivity()).hide_keys();
+
+                                }
+                            });
+
+
+
 
                         }
-                    });
 
-                    Toast.makeText(getActivity(), returnedMessages.getInit_msg_txt(),
-                            Toast.LENGTH_LONG).show();
-                }
+                    }
+                });
 
-            }
-        });
+
+
+        runnable.run();
+
+        Toast.makeText(getActivity(), "Messages Refreshed!!!",
+                        Toast.LENGTH_LONG).show();
+
+
+
+
+
+       // help_board_adapter.notifyDataSetChanged();
+
+
 
     }
 
@@ -173,6 +323,8 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         }
     }
+
+
 
 
 

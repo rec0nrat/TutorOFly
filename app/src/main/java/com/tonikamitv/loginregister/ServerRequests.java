@@ -3,6 +3,7 @@ package com.tonikamitv.loginregister;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class ServerRequests {
@@ -49,7 +51,7 @@ public class ServerRequests {
     }
 
     //Message Post/Sync methods
-    public void storeUserMessageInBackground(User user, Message message, GetUserCallback userCallBack){
+    public void storeUserMessageInBackground(User user, Message message, GetMessageCallback userCallBack){
         progressDialog.show();
         new StoreUserMessageAsyncTask(user, message, userCallBack).execute();
     }
@@ -66,10 +68,10 @@ public class ServerRequests {
 
     public class StoreUserMessageAsyncTask extends AsyncTask<Void, Void, Void>{
         User user;
-        GetUserCallback userCallBack;
+        GetMessageCallback userCallBack;
         Message message;
 
-        public StoreUserMessageAsyncTask(User user, Message message, GetUserCallback userCallBack){
+        public StoreUserMessageAsyncTask(User user, Message message, GetMessageCallback userCallBack){
             this.user = user;
             this.userCallBack = userCallBack;
             this.message = message;
@@ -79,10 +81,21 @@ public class ServerRequests {
         protected Void doInBackground(Void... voids) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
 
-            dataToSend.add(new BasicNameValuePair("username", user.username));
-            dataToSend.add(new BasicNameValuePair("message", message.getInit_msg_txt()));
-            dataToSend.add(new BasicNameValuePair("id", user.id + ""));
+            dataToSend.add(new BasicNameValuePair("init_text", message.getInit_msg_txt()));
+            dataToSend.add(new BasicNameValuePair("user_name", message.getUsername()));
+            dataToSend.add(new BasicNameValuePair("time_stamp", message.getInit_time_stamp()));
+            dataToSend.add(new BasicNameValuePair("last_update", message.getLast_update()));
+            dataToSend.add(new BasicNameValuePair("post_id", message.getPost_id() + ""));
+            dataToSend.add(new BasicNameValuePair("user_id", user.id + ""));
             dataToSend.add(new BasicNameValuePair("tag_id", message.getTag_id() + ""));
+            dataToSend.add((new BasicNameValuePair("title", message.getTitle())));
+            dataToSend.add(new BasicNameValuePair("anonymous", (message.is_anon())?1+"":0+""));
+            dataToSend.add(new BasicNameValuePair("help", 1+""));
+            dataToSend.add(new BasicNameValuePair("solved", 0+""));
+            dataToSend.add(new BasicNameValuePair("comments", message.getComment_cnt()+""));
+            dataToSend.add(new BasicNameValuePair("numLikes", message.getLikes_cnt()+""));
+
+
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -94,6 +107,8 @@ public class ServerRequests {
 
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "post_message_android.php");
+
+            Log.i("Message", "Data: " + dataToSend.toString());
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -288,7 +303,7 @@ public class ServerRequests {
 
 
     //**********************************************
-    public class FetchMessagesInBackground extends AsyncTask<Void, Void, Message> {
+    public class FetchMessagesInBackground extends AsyncTask<Void, Void, ArrayList<Message>> {
         //User user;
         GetMessageCallback userMessageCallBack;
 
@@ -298,7 +313,7 @@ public class ServerRequests {
         }
 
         @Override
-        protected Message doInBackground(Void... params) {
+        protected ArrayList<Message> doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             //dataToSend.add(new BasicNameValuePair("username", user.username));
            // dataToSend.add(new BasicNameValuePair("password", user.password));
@@ -312,7 +327,7 @@ public class ServerRequests {
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "get_messages_help.php");
 
-            Message returnedMessages = null;
+            ArrayList<Message> returnedMessages = new ArrayList<Message>();
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -320,17 +335,42 @@ public class ServerRequests {
 
                 HttpEntity entity = httpResponse.getEntity();
                 String result = EntityUtils.toString(entity);
-                JSONArray jarray = new JSONArray(result);
+
+                Log.i("JSON TEST", " " + result);
+                //JSONArray jarray = new JSONArray(result);
                 JSONObject jObject = new JSONObject(result);
+                Iterator<String> keys = jObject.keys();
+                //JSONArray jarray = in.;
+
 
                 if (jObject.length() != 0) {
-                    //Log.v("happened", "2");
-                    //String name = jObject.getString("username");
-                   // Message message = jObject.getString("message");
 
-                   // Log.v("Message: ", message);
+                    while (keys.hasNext()) {
 
-                   // returnedMessages = new Message(name, message);
+                        JSONObject message = jObject.getJSONObject(keys.next());
+
+                        String title = message.getString("title"),
+                                init_text = message.getString("init_text"),
+                                username = message.getString("user_name"),
+                                time_stamp = message.getString("time_stamp"),
+                                last_update = message.getString("last_update");
+                        int     post_id = message.getInt("post_id"),
+                                user_id = message.getInt("user_id"),
+                                tag_id = message.getInt("tag_id"),
+                                help_cnt = message.getInt("help"),
+                                comment_cnt = message.getInt("comments"),
+                                solved_cnt = message.getInt("solved"),
+                                likes_cnt = message.getInt("numLikes");
+
+                        boolean anonymous = (message.getInt("anonymous") == 0) ? false : true;
+
+
+
+
+                        returnedMessages.add(0,new Message(init_text,username,time_stamp,last_update,post_id,user_id,tag_id,help_cnt,comment_cnt,solved_cnt,likes_cnt,anonymous));
+
+                    }
+
                 }
 
             } catch (Exception e) {
@@ -344,7 +384,7 @@ public class ServerRequests {
         //**********************************************
 
         @Override
-        protected void onPostExecute(Message returnedMessages) {
+        protected void onPostExecute(ArrayList<Message> returnedMessages) {
             //Void returnedMessages;
             super.onPostExecute(returnedMessages);
             progressDialog.dismiss();

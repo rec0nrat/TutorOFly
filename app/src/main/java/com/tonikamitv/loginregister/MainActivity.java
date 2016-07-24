@@ -40,6 +40,8 @@ public class MainActivity extends Activity {
     Fragment fragment2 = new TabFragment2();
     Fragment fragment3 = new TabFragment3();
 
+    InputMethodManager imm;
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -96,14 +98,25 @@ public class MainActivity extends Activity {
 
         userLocalStore = new UserLocalStore(this);
 
+        try {
+             imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+    }
+
+    public void hide_keys(){
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private void addMapFragment() {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        MapFragment fragment = new MapFragment();
+       MapFragment fragment = new MapFragment();
         transaction.add(R.id.mapView, fragment);
-        transaction.commit();
+       transaction.commit();
     }
 
     @Override
@@ -203,10 +216,8 @@ public class MainActivity extends Activity {
     }
 
 
-    public static void closeKeyboard(Context c, IBinder windowToken) {
-        InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(windowToken, 0);
 
-    }
+
+
 
 }
