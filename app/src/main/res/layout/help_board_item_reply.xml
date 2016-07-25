@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#9b065471"
+    android:clickable="false">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/user_avatar_img"
+            android:src="@drawable/anon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Username"
+                android:id="@+id/user_name_txt"
+                android:layout_marginLeft="10dp"
+                android:textSize="20dp"
+                android:textColor="@color/secondary_text_default_material_dark"
+                android:textStyle="bold"
+                android:layout_above="@+id/post_date_init_txt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Posted on 7/22/2016"
+                android:id="@+id/post_date_init_txt"
+                android:layout_marginLeft="10dp"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_text_default_material_dark"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="false" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="What is the meaning of life and why should we go on living?"
+        android:id="@+id/message_content_txt"
+        android:layout_marginLeft="15dp"
+        android:textColor="#fbc11f"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:layout_marginRight="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="#TAG1 #TAG2 #TAG3"
+        android:id="@+id/message_hashtag_txt"
+        android:layout_marginLeft="15dp"
+        android:textColor="#db186d"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp" />
+
+</LinearLayout>

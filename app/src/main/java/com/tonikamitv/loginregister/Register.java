@@ -7,12 +7,13 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 //import android.support.v7.app.ActionBarActivity;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.vstechlab.easyfonts.EasyFonts;
 
 
 public class Register extends Activity implements View.OnClickListener{
@@ -33,6 +34,11 @@ public class Register extends Activity implements View.OnClickListener{
                 if (v instanceof TextView) {
                     setTypeFace((TextView) v);
                 }
+                if (v instanceof TextView) {
+                    // setTypeFace((TextView) v);
+                    ((TextView) v).setTypeface(EasyFonts.robotoBlack(v.getContext()));
+                }
+
                 return v;
             }
         });
@@ -106,4 +112,5 @@ public class Register extends Activity implements View.OnClickListener{
     private void setTypeFace(TextView tv) {
         tv.setTypeface(Typeface.createFromAsset(getAssets(), "AManoRegulold.ttf"));
     }
+
 }

@@ -1,5 +1,4 @@
 package com.tonikamitv.loginregister;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -8,7 +7,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.MapFragment;
+import com.vstechlab.easyfonts.EasyFonts;
 
 //import android.support.v7.app.ActionBarActivity;
 
@@ -53,7 +50,8 @@ public class MainActivity extends Activity {
             public View onCreateView(String name, Context context, AttributeSet attrs) {
                 View v = tryInflate(name, context, attrs);
                 if (v instanceof TextView) {
-                    setTypeFace((TextView) v);
+                    // setTypeFace((TextView) v);
+                    ((TextView) v).setTypeface(EasyFonts.robotoBlack(v.getContext()));
                 }
                 return v;
             }
@@ -203,10 +201,11 @@ public class MainActivity extends Activity {
     }
 
 
-
+/*
     private void setTypeFace(TextView tv) {
-        tv.setTypeface(Typeface.createFromAsset(getAssets(), "AManoRegulold.ttf"));
+        tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto.ttf"));
     }
+    */
 
     public void postMessageClicked(View view){
 

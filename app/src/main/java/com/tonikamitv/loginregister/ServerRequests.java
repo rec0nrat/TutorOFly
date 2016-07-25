@@ -31,7 +31,6 @@ public class ServerRequests {
     public static final String SERVER_ADDRESS = "http://52.34.0.76/";
     //public static final String SERVER_ADDRESS = "http://www.cbokit.com/";
 
-
     public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
@@ -367,7 +366,7 @@ public class ServerRequests {
 
 
 
-                        returnedMessages.add(0,new Message(init_text,username,time_stamp,last_update,post_id,user_id,tag_id,help_cnt,comment_cnt,solved_cnt,likes_cnt,anonymous));
+                        returnedMessages.add(0,new Message(init_text,username,time_stamp,last_update,post_id,user_id,tag_id,help_cnt,comment_cnt,solved_cnt,likes_cnt,anonymous,false));
 
                     }
 

@@ -7,18 +7,14 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 //import android.app.ActionBarActivity;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.Serializable;
+import com.vstechlab.easyfonts.EasyFonts;
 
 
 public class Login extends Activity implements View.OnClickListener {
@@ -38,8 +34,13 @@ public class Login extends Activity implements View.OnClickListener {
             @Override
             public View onCreateView(String name, Context context, AttributeSet attrs) {
                 View v = tryInflate(name, context, attrs);
+                /*
                 if (v instanceof TextView) {
                     setTypeFace((TextView) v);
+                }*/
+                if (v instanceof TextView) {
+                    // setTypeFace((TextView) v);
+                    ((TextView) v).setTypeface(EasyFonts.robotoBlack(v.getContext()));
                 }
                 return v;
             }
@@ -136,4 +137,5 @@ public class Login extends Activity implements View.OnClickListener {
     private void setTypeFace(TextView tv) {
         tv.setTypeface(Typeface.createFromAsset(getAssets(), "AManoRegulold.ttf"));
     }
+
 }

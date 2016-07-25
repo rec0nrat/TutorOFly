@@ -118,13 +118,20 @@ public class Message implements Serializable {
         this.is_anon = is_anon;
     }
 
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     private int post_id, user_id, tag_id, help_cnt, comment_cnt, solved_cnt, likes_cnt;
     private String  init_time_stamp, last_update, title;
-    private boolean is_anon;
+    private boolean is_anon, is_reply;
 
-
-
-    public Message(String message, User user){
+    public Message(String message, User user, boolean is_reply){
 
         //new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date()));
         this.username = user.username;
@@ -142,14 +149,16 @@ public class Message implements Serializable {
         this.init_time_stamp = timestamp.toString();
         this.last_update = timestamp.toString();
         this.is_anon = false;
+        this.is_reply = is_reply;
+
+
 
        // java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
        // Log.i("Date/Time Request:  ", currentTimestamp.toString());
-
     }
 
     public Message( String init_txt,  String username, String timestamp, String update, int post_id, int user_id, int tag_id, int help, int comment,
-                   int solved, int likes, boolean anon){
+                   int solved, int likes, boolean anon, boolean is_reply){
         this.username = username;
         this.init_msg_txt = init_txt;
         //java.sql.Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
@@ -164,13 +173,14 @@ public class Message implements Serializable {
         this.init_time_stamp = timestamp;
         this.last_update = update;
         this.is_anon = anon;
+        this.is_reply = is_reply;
     }
 
-    public String getTitle() {
-        return title;
+    public boolean is_reply() {
+        return is_reply;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setIs_reply(boolean is_reply) {
+        this.is_reply = is_reply;
     }
 }

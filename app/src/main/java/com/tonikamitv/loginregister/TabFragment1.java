@@ -36,8 +36,6 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     ListView theListView;
     ArrayAdapter help_board_adapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
     UserLocalStore userLocalStore;
-    Timer t = new Timer();
-    TimerTask refresh_messages;
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -45,7 +43,6 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
             //
             // Do the stuff
             //
-
 
             ServerRequests serverRequest = new ServerRequests(getActivity());
 
@@ -85,35 +82,6 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
                         }
 
 
-                        //help_board_adapter.notifyDataSetChanged();
-
-
-                        // ArrayAdapter help_board_adapter;
-                        // help_board_adapter = new ArrayAdapter(getActivity(), android.R.layout.expandable_list_content, help_board_messages);
-
-                        //  theListView.setAdapter(help_board_adapter);
-
-                        /*
-                        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                                TextView msg_txt = (TextView)view.findViewById(R.id.message_content_txt);
-
-                                Toast.makeText(getActivity(), "Messsssge Clicked!",
-                                        Toast.LENGTH_LONG).show();
-
-                                if(msg_txt.getText().length() <= 23) {
-                                    msg_txt.setText(help_board_messages.get(position).getInit_msg_txt());
-                                }else  {
-                                    msg_txt.setText(help_board_messages.get(position).getTitle());
-                                }
-
-
-                            }
-                        });*/
-
-
                     }
 
                 }
@@ -137,19 +105,10 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         theListView = (ListView) rootView.findViewById(R.id.listView);
 
-        ///help_board_messages.add("Message1");
-        //help_board_messages.add("Message2");
-        //help_board_messages.add("Message10000");
-
         help_board_messages = new ArrayList<Message>();
 
-
-        //help_board_messages.clear();
-       // Toast.makeText(getActivity(), help_board_messages.toArray().toString(),
-        //        Toast.LENGTH_LONG).show();
-
         //set the adapter and auto refresh if list is changed
-        help_board_adapter = new MessageArrayAdapter(this.getActivity(), help_board_messages);
+        help_board_adapter = new MessageArrayAdapter(this.getActivity(), 0, help_board_messages);
         theListView.setAdapter(help_board_adapter);
 
 
@@ -180,7 +139,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         ServerRequests serverRequest = new ServerRequests(getActivity());
 
-       final Message message = new Message(messageText.getText().toString(), user);
+       final Message message = new Message(messageText.getText().toString(), user, false);
         //help_board_messages.add(message);
 
         serverRequest.storeUserMessageInBackground(user, message, new GetMessageCallback() {
