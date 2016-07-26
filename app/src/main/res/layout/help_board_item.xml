@@ -73,7 +73,6 @@
         android:id="@+id/message_hashtag_txt"
         android:layout_marginLeft="15dp"
         android:textColor="@android:color/holo_blue_bright"
-        android:textStyle="bold"
         android:textSize="15dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="15dp" />

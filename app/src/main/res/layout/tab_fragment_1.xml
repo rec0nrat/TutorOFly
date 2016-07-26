@@ -2,48 +2,61 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:weightSum="1"
     android:id="@+id/tab1Frag"
-    android:windowSoftInputMode="stateHidden|adjustResize">
+    android:windowSoftInputMode="stateVisible|adjustResize"
+    android:background="@drawable/bg">
 
 <!--android:windowSoftInputMode="adjustPan" -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Message:"
-        android:textSize="16sp"/>
-
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/tutorMessageInput"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/back"/>
+        android:background="@drawable/back"
+        android:textColor="#ffbf36"
+        android:hint="Message Text..."
+        android:textSize="20dp"
+        android:singleLine="true"
+        android:editable="true"
+        android:autoText="true"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Post Message"
-        android:id="@+id/btnPostMessage"
-        android:clickable="false" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sync Messages"
-        android:id="@+id/btnSyncMessage" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sync Messages"
+            android:id="@+id/btnSyncMessage"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Post Message"
+            android:id="@+id/btnPostMessage"
+            android:clickable="false"
+            android:layout_weight="0.50" />
+
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listView"
         android:choiceMode="multipleChoice"
-        android:visibility="visible"
         android:touchscreenBlocksFocus="false"
         android:footerDividersEnabled="false"
         android:layout_marginRight="7dp"
@@ -54,7 +67,6 @@
         android:transcriptMode="disabled"
         android:foregroundGravity="bottom"
         android:headerDividersEnabled="false"
-        android:nestedScrollingEnabled="false"
-        android:layout_gravity="top" />
+        android:nestedScrollingEnabled="false" />
 
 </LinearLayout>
