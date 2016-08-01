@@ -109,14 +109,6 @@ public class MainActivity extends Activity {
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
-    private void addMapFragment() {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-       MapFragment fragment = new MapFragment();
-        transaction.add(R.id.mapView, fragment);
-       transaction.commit();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
