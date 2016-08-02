@@ -9,19 +9,23 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.vstechlab.easyfonts.EasyFonts;
 
 
-public class Register extends Activity implements View.OnClickListener{
+public class Register extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     //EditText etName, etAge, etUsername, etPassword;
     EditText etNameFirst, etNameLast, etUsername, etPassword, etEmail, etID;
 
     Button bRegister;
     UserLocalStore userLocalStore;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,18 @@ public class Register extends Activity implements View.OnClickListener{
         bRegister = (Button) findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(this);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.usertype_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
 
     }
 
@@ -113,4 +129,13 @@ public class Register extends Activity implements View.OnClickListener{
         tv.setTypeface(Typeface.createFromAsset(getAssets(), "AManoRegulold.ttf"));
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

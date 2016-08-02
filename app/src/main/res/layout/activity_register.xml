@@ -123,24 +123,42 @@
         android:id="@+id/textView5"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/etID"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textSize="20dp"
-        android:background="@drawable/back"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView5"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp" />
+        android:id="@+id/hlayout"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/etID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="20dp"
+            android:background="@drawable/back"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView5"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/spinner"
+            android:layout_marginRight="60dp"
+            android:layout_weight="1.62"
+            android:spinnerMode="dropdown"
+            android:visibility="visible" />
+    </LinearLayout>
 
     <TextView
         android:text="Username"
@@ -151,9 +169,9 @@
         android:layout_centerHorizontal="true"
         android:textSize="20dp"
         android:textColor="@color/wallet_holo_blue_light"
-        android:layout_below="@+id/etID"
         android:id="@+id/username_txt"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/hlayout" />
 
     <EditText
         android:id="@+id/etUsername"

@@ -73,7 +73,7 @@ class MessageArrayAdapter extends ArrayAdapter<Message>{
         message_last_updated_txt.setText((CharSequence) message.getLast_update().toString());
         like_count_txt.setText( Integer.toString(likes));
         comment_count_txt.setText(Integer.toString(comments));
-        like_icon_img.setImageResource(R.drawable.like);
+        like_icon_img.setImageResource(R.drawable.likeit);
         comment_icon_img.setImageResource(R.drawable.comment);
 
         return message_view;

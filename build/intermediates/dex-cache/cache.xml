@@ -1,3 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="e97df66282aa4dd17ae353c149d537186ac1953b">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_a2b62b86171a3b44fc830f0ed0770ef2daa42b96\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-22.2.0_dae082ba0ba0c834765aaf31d7d79298e009a666\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-22.2.0_421fc1259ace910615e9443a6ca273d6efda8b28\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-6.5.87_ff24b1279db94abfa24017f6be9378bfb7143bed\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.4\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="cf251baf39f5c5138224b67b4106eb6331abbd13">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.maps.android-android-maps-utils-0.3.4_242a677a7210994b1eeee738373bae886293c54f\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.0_a211189115b99516eabaa5b84be72b0f5175fc40\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.2.0_c9f98295a126dadc9d42b9cdf37c0a8667157611\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="26ffa163ef01cd09237939791336f945d3d25de0">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_c658a9f1934ee4e357adb90549dd5aea2d8fe612\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.vstechlab.easyfonts\easyfonts\1.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="b43f286591e4cff994aab0192b03c7c7076b3c84">
+        <dex dex="C:\Users\rec0nrat\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.vstechlab.easyfonts-easyfonts-1.0.0_117d1b7a2b8a601aecae41ba4dc49760e6dd4d23\classes.dex" />
+    </item>
+
+</items>
