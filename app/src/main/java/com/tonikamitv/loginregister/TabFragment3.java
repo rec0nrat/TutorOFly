@@ -48,7 +48,7 @@ public class TabFragment3 extends Fragment {//implements LocationListener{
         provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);*/
 
-        mMapView = (MapView) v.findViewById(R.id.mapView);
+        mMapView = (MapView) v.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume();// needed to get the map to display immediately

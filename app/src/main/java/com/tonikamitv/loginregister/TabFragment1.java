@@ -254,7 +254,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
 
 
-        runnable.run();
+        //runnable.run();
 
         Toast.makeText(getActivity(), "Messages Refreshed!!!",
                         Toast.LENGTH_LONG).show();
