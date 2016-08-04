@@ -19,6 +19,7 @@ import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.system.ErrnoException;
 import android.util.Log;
@@ -41,6 +42,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -74,6 +77,7 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
 
     private GoogleMap mMap;
     private MapView mMapView;
+    private Circle circle;
     //private MapView mMap;
 
     @Override
@@ -129,12 +133,20 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         MarkerOptions marker1 = new MarkerOptions().position(
                 new LatLng(UAT_MAIN_BUILDING_LATITUDE, UAT_MAIN_BUILDING_LONGITUDE)).title("UAT Main Buliding Hotspot");
 
+        circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(UAT_MAIN_BUILDING_LATITUDE, UAT_MAIN_BUILDING_LONGITUDE))
+                .radius(20)
+                .strokeWidth(10)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(128, 255, 0, 0)));
+
         MarkerOptions marker2 = new MarkerOptions().position(
                 new LatLng(UAT_FOUNDERS_LATITUDE, UAT_FOUNDERS_LONGITUDE)).title("UAT Founders Hotspot");
 
         // Changing marker icon
         marker1.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                .fromResource(R.drawable.cmarker2));
+               // .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
         marker2.icon(BitmapDescriptorFactory
                 .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
