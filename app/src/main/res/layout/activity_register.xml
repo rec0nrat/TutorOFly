@@ -6,7 +6,8 @@
     android:weightSum="1"
     android:windowSoftInputMode="stateVisible|adjustResize"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:background="@drawable/bg">
 
 
     <TextView
@@ -133,7 +134,7 @@
 
         <EditText
             android:id="@+id/etID"
-            android:layout_width="match_parent"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textSize="20dp"
@@ -148,16 +149,22 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp" />
+            android:paddingBottom="5dp"
+            android:layout_weight="0.21" />
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="103dp"
             android:layout_height="match_parent"
             android:id="@+id/spinner"
-            android:layout_marginRight="60dp"
-            android:layout_weight="1.62"
             android:spinnerMode="dropdown"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/bRegister"
+            android:layout_toEndOf="@+id/bRegister"
+            android:background="@drawable/back"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp" />
+
     </LinearLayout>
 
     <TextView

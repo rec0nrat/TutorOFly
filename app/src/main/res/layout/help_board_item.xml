@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#6e091433"
-    android:clickable="false">
+    android:background="#6eadb2bd"
+    android:clickable="false"
+    android:divider="#333333"
+    android:dividerPadding="30dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,7 +32,7 @@
                 android:id="@+id/user_name_txt"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"
-                android:textColor="@color/secondary_text_default_material_dark"
+                android:textColor="#333333"
                 android:textStyle="bold"
                 android:layout_above="@+id/post_date_init_txt" />
 
@@ -43,7 +45,7 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="15dp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/secondary_text_default_material_dark"
+                android:textColor="#333333"
                 android:layout_alignParentEnd="false"
                 android:layout_alignParentStart="false"
                 android:layout_alignParentBottom="true"
@@ -138,7 +140,7 @@
             android:text="Last Updated on 7/23/2016 @ 2:35 pm"
             android:id="@+id/message_last_updated_txt"
             android:layout_marginLeft="5dp"
-            android:textColor="@color/secondary_text_default_material_dark"
+            android:textColor="#333333"
             android:textSize="14dp"
             android:textStyle="italic"
             android:layout_alignParentBottom="false"
