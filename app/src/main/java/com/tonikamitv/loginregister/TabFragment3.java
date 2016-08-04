@@ -29,6 +29,7 @@ public class TabFragment3 extends Fragment {//implements LocationListener{
     private GoogleMap googleMap;
     Context mContext;
 
+
     //LocationManager locationManager;
     //String provider;
 
@@ -47,6 +48,8 @@ public class TabFragment3 extends Fragment {//implements LocationListener{
         Criteria criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);*/
+        GeofenceActivity geofences = new GeofenceActivity();
+        geofences.createGeofences();
 
         mMapView = (MapView) v.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);

@@ -35,7 +35,8 @@ public class MainActivity extends Activity {
 
     Fragment fragment1 = new TabFragment1();
     Fragment fragment2 = new TabFragment2();
-    Fragment fragment3 = new TabFragment3();
+   // Fragment fragment3 = new TabFragment3();
+    Fragment fragment3 = new GeofenceActivity();
 
     InputMethodManager imm;
 

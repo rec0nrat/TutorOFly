@@ -13,6 +13,7 @@ import static com.tonikamitv.loginregister.Constants.UAT_FOUNDERS_LONGITUDE;
 import static com.tonikamitv.loginregister.Constants.UAT_FOUNDERS_RADIUS_METERS;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
@@ -21,6 +22,9 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.system.ErrnoException;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.ads.AdRequest;
@@ -44,7 +48,7 @@ import org.xml.sax.ErrorHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeofenceActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
+public class GeofenceActivity extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
     // Internal List of Geofence objects. In a real app, these might be provided by an API based on
@@ -68,19 +72,25 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
     private REQUEST_TYPE mRequestType;
 
     private GoogleMap mMap;
+    //private MapView mMap;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // inflate and return the layout
+        View v = inflater.inflate(R.layout.tab_fragment_3, container,
+                false);
         // Rather than displayng this activity, simply display a toast indicating that the geofence
         // service is being created. This should happen in less than a second.
         if (!isGooglePlayServicesAvailable()) {
             Log.e(TAG, "Google Play services unavailable.");
             finish();
-            return;
+            return v;
         }
 
-        mApiClient = new GoogleApiClient.Builder(this)
+        mApiClient = new GoogleApiClient.Builder(this.getActivity())
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -89,10 +99,11 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
         mApiClient.connect();
 
         // Instantiate a new geofence storage area.
-        mGeofenceStorage = new SimpleGeofenceStore(this);
+        mGeofenceStorage = new SimpleGeofenceStore(this.getActivity());
         // Instantiate the current List of geofences.
         mGeofenceList = new ArrayList<Geofence>();
         createGeofences();
+        //mMap = ((MapFragment) this.getActivity().getFragmentManager().findFragmentById(R.id.mapView)).getMap();
 
         setUpMapIfNeeded();
 
@@ -124,10 +135,11 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
                 .target(new LatLng(33.377191, -111.975874)).zoom(19).build();
         mMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition2));
+        return v;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
     }
@@ -136,7 +148,8 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
         if (mMap != null) {
             Log.e(TAG, "Loading Map");
         }
-        mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        mMap = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapView)).getMap();
+        //mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         if (mMap == null) {
             Log.e(TAG, "Error");
         }
@@ -178,7 +191,7 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
         // If the error has a resolution, start a Google Play services activity to resolve it.
         if (connectionResult.hasResolution()) {
             try {
-                connectionResult.startResolutionForResult(this,
+                connectionResult.startResolutionForResult(this.getActivity(),
                         CONNECTION_FAILURE_RESOLUTION_REQUEST);
             } catch (IntentSender.SendIntentException e) {
                 Log.e(TAG, "Exception while resolving connection error.", e);
@@ -199,8 +212,12 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
         mGeofenceRequestIntent = getGeofenceTransitionPendingIntent();
         LocationServices.GeofencingApi.addGeofences(mApiClient, mGeofenceList,
                 mGeofenceRequestIntent);
-        Toast.makeText(this, getString(R.string.start_geofence_service), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getActivity(), getString(R.string.start_geofence_service), Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private void finish() {
+
     }
 
     @Override
@@ -216,7 +233,7 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
      * @return true if it is.
      */
     private boolean isGooglePlayServicesAvailable() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getActivity());
         if (ConnectionResult.SUCCESS == resultCode) {
             if (Log.isLoggable(TAG, Log.DEBUG)) {
                 Log.d(TAG, "Google Play services is available.");
@@ -233,8 +250,8 @@ public class GeofenceActivity extends Activity implements GoogleApiClient.Connec
      * transition occurs.
      */
     private PendingIntent getGeofenceTransitionPendingIntent() {
-        Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
-        return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(this.getActivity(), GeofenceTransitionsIntentService.class);
+        return PendingIntent.getService(this.getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }
