@@ -37,6 +37,12 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
     ArrayAdapter help_board_adapter; // new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, help_board_messages);
     UserLocalStore userLocalStore;
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        runnable = null;
+    }
+
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
@@ -258,6 +264,7 @@ public class TabFragment1 extends Fragment implements View.OnClickListener{
 
         Toast.makeText(getActivity(), "Messages Refreshed!!!",
                         Toast.LENGTH_LONG).show();
+
 
 
 
