@@ -37,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -72,6 +73,7 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
     private REQUEST_TYPE mRequestType;
 
     private GoogleMap mMap;
+    private MapView mMapView;
     //private MapView mMap;
 
     @Override
@@ -80,10 +82,25 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         super.onCreate(savedInstanceState);
 
         // inflate and return the layout
-        View v = inflater.inflate(R.layout.tab_fragment_3, container,
+        View v = inflater.inflate(R.layout.activity_geofence, container,
                 false);
         // Rather than displayng this activity, simply display a toast indicating that the geofence
         // service is being created. This should happen in less than a second.
+
+
+        mMapView = (MapView) v.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.onResume();// needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMap = mMapView.getMap();
+
         if (!isGooglePlayServicesAvailable()) {
             Log.e(TAG, "Google Play services unavailable.");
             finish();
@@ -103,7 +120,8 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         // Instantiate the current List of geofences.
         mGeofenceList = new ArrayList<Geofence>();
         createGeofences();
-        //mMap = ((MapFragment) this.getActivity().getFragmentManager().findFragmentById(R.id.mapView)).getMap();
+
+       // mMap = ((MapFragment)((SupportMapFragment) v.findViewById(R.id.mapView)).getMap());
 
         setUpMapIfNeeded();
 
@@ -148,7 +166,7 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         if (mMap != null) {
             Log.e(TAG, "Loading Map");
         }
-        mMap = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapView)).getMap();
+       // mMap = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapView)).getMap();
         //mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         if (mMap == null) {
             Log.e(TAG, "Error");

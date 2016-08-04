@@ -38,7 +38,7 @@ public class TabFragment3 extends Fragment {//implements LocationListener{
                              Bundle savedInstanceState) {
 
         // inflate and return the layout
-        View v = inflater.inflate(R.layout.tab_fragment_3, container,
+        View v = inflater.inflate(R.layout.activity_geofence, container,
                 false);
 
        /* // Get the location manager
@@ -48,10 +48,10 @@ public class TabFragment3 extends Fragment {//implements LocationListener{
         Criteria criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);*/
-        GeofenceActivity geofences = new GeofenceActivity();
-        geofences.createGeofences();
+     //   GeofenceActivity geofences = new GeofenceActivity();
+     //   geofences.createGeofences();
 
-        mMapView = (MapView) v.findViewById(R.id.map);
+        mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume();// needed to get the map to display immediately
