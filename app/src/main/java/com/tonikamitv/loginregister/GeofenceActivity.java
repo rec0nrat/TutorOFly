@@ -135,14 +135,21 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
 
         circle = mMap.addCircle(new CircleOptions()
                 .center(new LatLng(UAT_MAIN_BUILDING_LATITUDE, UAT_MAIN_BUILDING_LONGITUDE))
-                .radius(20)
+                .radius(35)
                 .strokeWidth(10)
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(128, 255, 0, 0)));
+                .strokeColor(Color.BLACK)
+                .fillColor(Color.argb(175, 51, 204, 255)));
 
-        MarkerOptions marker2 = new MarkerOptions().position(
+        circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(UAT_FOUNDERS_LATITUDE, UAT_FOUNDERS_LONGITUDE))
+                .radius(40)
+                .strokeWidth(10)
+                .strokeColor(Color.BLACK)
+                .fillColor(Color.argb(175, 51, 204, 255)));
+
+       MarkerOptions marker2 = new MarkerOptions().position(
                 new LatLng(UAT_FOUNDERS_LATITUDE, UAT_FOUNDERS_LONGITUDE)).title("UAT Founders Hotspot");
-
+/*
         // Changing marker icon
         marker1.icon(BitmapDescriptorFactory
                 .fromResource(R.drawable.cmarker2));
@@ -161,6 +168,7 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
 
         // adding marker2
         mMap.addMarker(marker2);
+        */
         CameraPosition cameraPosition2 = new CameraPosition.Builder()
                 .target(new LatLng(33.377191, -111.975874)).zoom(19).build();
         mMap.animateCamera(CameraUpdateFactory
