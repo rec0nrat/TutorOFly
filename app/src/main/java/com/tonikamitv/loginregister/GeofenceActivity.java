@@ -12,23 +12,19 @@ import static com.tonikamitv.loginregister.Constants.UAT_FOUNDERS_LATITUDE;
 import static com.tonikamitv.loginregister.Constants.UAT_FOUNDERS_LONGITUDE;
 import static com.tonikamitv.loginregister.Constants.UAT_FOUNDERS_RADIUS_METERS;
 
-import android.app.Activity;
+import android.Manifest;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.system.ErrnoException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.google.ads.AdRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,19 +32,12 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.xml.sax.ErrorHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,27 +117,28 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
        // mMap = ((MapFragment)((SupportMapFragment) v.findViewById(R.id.mapView)).getMap());
 
         setUpMapIfNeeded();
-
+/*
         // create marker
         MarkerOptions marker1 = new MarkerOptions().position(
                 new LatLng(UAT_MAIN_BUILDING_LATITUDE, UAT_MAIN_BUILDING_LONGITUDE)).title("UAT Main Buliding Hotspot");
-
+        MarkerOptions marker2 = new MarkerOptions().position(
+                new LatLng(UAT_FOUNDERS_LATITUDE, UAT_FOUNDERS_LONGITUDE)).title("UAT Founders Hotspot");
+*/
         circle = mMap.addCircle(new CircleOptions()
                 .center(new LatLng(UAT_MAIN_BUILDING_LATITUDE, UAT_MAIN_BUILDING_LONGITUDE))
-                .radius(35)
+                .radius(29)
                 .strokeWidth(10)
                 .strokeColor(Color.BLACK)
                 .fillColor(Color.argb(175, 51, 204, 255)));
 
         circle = mMap.addCircle(new CircleOptions()
                 .center(new LatLng(UAT_FOUNDERS_LATITUDE, UAT_FOUNDERS_LONGITUDE))
-                .radius(40)
+                .radius(39)
                 .strokeWidth(10)
                 .strokeColor(Color.BLACK)
                 .fillColor(Color.argb(175, 51, 204, 255)));
 
-       MarkerOptions marker2 = new MarkerOptions().position(
-                new LatLng(UAT_FOUNDERS_LATITUDE, UAT_FOUNDERS_LONGITUDE)).title("UAT Founders Hotspot");
+
 /*
         // Changing marker icon
         marker1.icon(BitmapDescriptorFactory
@@ -170,10 +160,11 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         mMap.addMarker(marker2);
         */
         CameraPosition cameraPosition2 = new CameraPosition.Builder()
-                .target(new LatLng(33.377191, -111.975874)).zoom(19).build();
+                .target(new LatLng(33.377387,-111.975941)).zoom(19).build();
         mMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition2));
         return v;
+
     }
 
     @Override
