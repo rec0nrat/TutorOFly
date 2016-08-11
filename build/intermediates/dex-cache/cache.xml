@@ -1,3 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-22.2.0_c7bf5e8c2be1afec5e5a2c0e8c0fa2fa07c4e252\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.2.0_da0c5f186849279f78aef3cabbba12577d4d83b8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-22.2.0_4b3400f892e1b1ee05ee3fcb092b42f029321484\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-6.5.87_74a10dc27caf4cef6c235236a8971bb83b86a5f5\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.vstechlab.easyfonts\easyfonts\1.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="b43f286591e4cff994aab0192b03c7c7076b3c84">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.vstechlab.easyfonts-easyfonts-1.0.0_99d4c222938788370ade896923eec082d3ef74b8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.0_baf91720621c3dafc67a685e5ef9b57dda467c4f\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="a94077826473c12555241cf259c559d757690f2f">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ced985702d89048650aea26531687c20f4378316\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="291c356b1d61293906b2f127f8708d31da01670b">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_5d6f22777cfaeeeb7c304ef30a61616051d4a9e8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.4\jars\classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="cf251baf39f5c5138224b67b4106eb6331abbd13">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.maps.android-android-maps-utils-0.3.4_e982209893f9e100ee83325233dcea46c45015b5\classes.dex" />
+    </item>
+
+</items>

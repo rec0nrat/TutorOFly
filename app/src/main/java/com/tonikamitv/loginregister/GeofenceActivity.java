@@ -93,6 +93,7 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         }
 
         mMap = mMapView.getMap();
+        mMap.setMyLocationEnabled(true);
 
         if (!isGooglePlayServicesAvailable()) {
             Log.e(TAG, "Google Play services unavailable.");
