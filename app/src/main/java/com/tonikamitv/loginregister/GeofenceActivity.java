@@ -34,6 +34,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -93,7 +94,9 @@ public class GeofenceActivity extends Fragment implements GoogleApiClient.Connec
         }
 
         mMap = mMapView.getMap();
-        mMap.setMyLocationEnabled(true);
+        this.mMap.setMyLocationEnabled(true);
+        UiSettings settings = this.mMap.getUiSettings();
+        settings.setMyLocationButtonEnabled(true);
 
         if (!isGooglePlayServicesAvailable()) {
             Log.e(TAG, "Google Play services unavailable.");

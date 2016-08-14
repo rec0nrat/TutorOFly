@@ -9,6 +9,20 @@
         <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-22.2.0_c7bf5e8c2be1afec5e5a2c0e8c0fa2fa07c4e252\classes.dex" />
     </item>
     <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="37876053de5f1203b5b2d37371a76829edfe815f">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ced985702d89048650aea26531687c20f4378316\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="0fe98e9043971bc3fa9238f4016669c2d9e6b519">
+        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_5d6f22777cfaeeeb7c304ef30a61616051d4a9e8\classes.dex" />
+    </item>
+    <item
         jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
         jumboMode="true"
         revision="21.1.2"
@@ -42,20 +56,6 @@
         revision="21.1.2"
         sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
         <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.0_baf91720621c3dafc67a685e5ef9b57dda467c4f\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="21.1.2"
-        sha1="a94077826473c12555241cf259c559d757690f2f">
-        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ced985702d89048650aea26531687c20f4378316\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        revision="21.1.2"
-        sha1="291c356b1d61293906b2f127f8708d31da01670b">
-        <dex dex="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_5d6f22777cfaeeeb7c304ef30a61616051d4a9e8\classes.dex" />
     </item>
     <item
         jar="C:\Users\cbilb\Documents\TutorOFly\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.4\jars\classes.jar"
